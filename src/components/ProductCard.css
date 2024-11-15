@@ -1,0 +1,104 @@
+/* Styling for the product card container */
+.product-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 15px;
+    text-align: center;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Styling for the tag (e.g., Hot) */
+.product-card .tag {
+    background-color: #ff6f61;
+    color: white;
+    padding: 5px 10px;
+    font-weight: bold;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* Styling for the product image */
+.product-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+/* Styling for product info (title, description, price, etc.) */
+.product-info {
+    padding: 10px;
+}
+
+/* Title styling */
+.product-card h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 10px 0;
+}
+
+/* Product description styling */
+.product-description {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+/* Original price (struck through) */
+.original-price {
+    font-size: 1rem;
+    color: #888;
+    text-decoration: line-through;
+    margin-right: 10px;
+}
+
+/* Discount price (highlighted) */
+.discount-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff6f61; /* You can change the color as needed */
+}
+
+/* Button styling */
+.add-to-cart-btn {
+    background-color: #ff6f61;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #ff3b30;
+}
+
+/* Ensure button text doesn't get underlined */
+.add-to-cart-btn a {
+    text-decoration: none;
+    color: white;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .product-card {
+        max-width: 90%;
+        margin: 10px auto;
+    }
+}
