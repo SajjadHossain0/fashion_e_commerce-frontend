@@ -7,6 +7,8 @@ import Dashboard from "./Dashboard";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ManageProduct from "./Manage_Product/ManageProduct";
 import AddProduct from "./Manage_Product/AddProduct";
+import ViewProduct from "./Manage_Product/ViewProduct";
+import UpdateProductPage from "./Manage_Product/UpdateProductPage";
 
 export default function AdminPage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
@@ -74,6 +76,8 @@ export default function AdminPage() {
                     <Routes>
                         <Route path="/manage-product" element={<ManageProduct/>}/>
                         <Route path="/addProduct" element={<AddProduct/>}/>
+                        <Route path="/viewProduct" element={<ViewProduct/>}/>
+                        <Route path="/update-product/:productId" component={UpdateProductPage} />
                     </Routes>
 
                 </BrowserRouter>
