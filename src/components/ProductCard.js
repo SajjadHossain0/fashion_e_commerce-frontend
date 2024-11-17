@@ -5,7 +5,7 @@ import {FaHotjar} from "react-icons/fa";
 export default function ProductCard(props) {
     return (
         <div>
-            <a href="">
+            <a href="" style={{textDecoration:"none",color:"black"}}>
                 <div className="product-card">
                     {/*<div className="tag"><FaHotjar /> Hot</div>*/}
                     <br/>

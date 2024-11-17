@@ -1,0 +1,48 @@
+.add-product {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.add-product h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.add-product-form input,
+.add-product-form textarea,
+.add-product-form button {
+    padding: 10px;
+    font-size: 16px;
+}
+
+.add-product-form input[type="file"] {
+    border: none;
+}
+
+.add-product-form .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.submit-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}

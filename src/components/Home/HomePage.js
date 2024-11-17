@@ -1,66 +1,70 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./HomePage.css";
-import {IoMenu} from "react-icons/io5";
-import {MdAccountCircle} from "react-icons/md";
+import ProductCard from "../ProductCard";
+import {CgProfile} from "react-icons/cg";
 import {FaCartPlus} from "react-icons/fa";
-import ProductCard from "../ProductCard"; // Extracted inline styles into this CSS file
 
-function HomePage() {
+export default function HomePage() {
+
+    const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768); // Default based on screen size
+
     const toggleSidebar = () => {
-        document.getElementById("sidebar").classList.toggle("open");
+        setIsSidebarOpen(!isSidebarOpen);
     };
 
+    useEffect(() => {
+        const handleResize = () => {
+            // Adjust sidebar visibility based on screen size
+            if (window.innerWidth > 768) {
+                setIsSidebarOpen(true);
+            } else {
+                setIsSidebarOpen(false);
+            }
+        };
+
+        // Attach resize event listener
+        window.addEventListener("resize", handleResize);
+
+        // Cleanup the event listener on component unmount
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
     return (
-        <div>
-            <header className="header">
-                <div className="hamburger" onClick={toggleSidebar}>
-                    <IoMenu/>
-                </div>
-                &nbsp;
-                <div className="logo">LOGO</div>
+        <div className="homepage">
+            <header className="navbar">
+                <button className="toggle-btn" onClick={toggleSidebar}>
+                    ☰
+                </button>
+                <div className="logo">MyLogo</div>
                 <div className="search-bar">
-                    <input type="text" className="pcsrch" placeholder="Search..." />
+                    <input type="text" placeholder="Search..." />
                 </div>
-                <div className="navIcon">
-                    <a href="#"><MdAccountCircle/></a>  <a href="#"><FaCartPlus /></a>
+                <div className="nav-icons">
+                    <a className="icon"><CgProfile /></a>
+                    <a className="icon"><FaCartPlus/></a>
                 </div>
             </header>
 
-            <div className="container">
-
-                <aside className="sidebar" id="sidebar">
-                    <h3>Categories</h3>
-                    <br />
-                    <details>
-                        <summary>Man</summary>
-                        <a href="#"><li>Shirt</li></a>
-                        <a href="#"><li>Shirt</li></a>
-                        <a href="#"><li>Shirt</li></a>
-                        <a href="#"><li>Shirt</li></a>
-                    </details>
-                    <details>
-                        <summary>Women</summary>
-                        <a href="#"><li>Western</li></a>
-                        <a href="#"><li>Western</li></a>
-                        <a href="#"><li>Western</li></a>
-                        <a href="#"><li>Western</li></a>
-                    </details>
-                </aside>
-
-                <main className="main-content">
-                    <input type="text" className="mobsrch" placeholder="Search..."/>
-                    <br/>
-
-                    <ProductCard/>
-                    <ProductCard/>
-                    <ProductCard/>
-                    <ProductCard/>
-                    <ProductCard/>
-
-                </main>
+            <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
+                <ul>
+                    <li>Dashboard</li>
+                    <li>Profile</li>
+                    <li>Orders</li>
+                    <li>Settings</li>
+                    <li>Logout</li>
+                </ul>
             </div>
+
+            <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
+                <div className="product-grid">
+                    {/* Render multiple ProductCards */}
+                    {Array.from({length: 8}).map((_, i) => (
+                        <ProductCard key={i}/>
+                    ))}
+                </div>
+            </main>
         </div>
     );
 }
-
-export default HomePage;
