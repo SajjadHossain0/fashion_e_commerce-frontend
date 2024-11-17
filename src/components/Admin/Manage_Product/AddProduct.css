@@ -19,20 +19,133 @@
 }
 
 .add-product-form input,
-.add-product-form textarea,
+.add-product-form textarea{
+    flex: 1; /* Makes both inputs equally wide */
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
 .add-product-form button {
     padding: 10px;
     font-size: 16px;
+
+}
+
+.price-discount-div {
+    display: flex;
+    gap: 10px; /* Adds space between the inputs */
+    justify-content: space-between; /* Evenly distributes space */
+    align-items: center; /* Aligns inputs vertically */
+}
+
+.price-discount-div input {
+    flex: 1; /* Makes both inputs equally wide */
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.price-discount-div input:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.brand-material-div {
+    display: flex;
+    gap: 10px; /* Adds space between the inputs */
+    justify-content: space-between; /* Evenly distributes space */
+    align-items: center; /* Aligns inputs vertically */
+}
+
+.brand-material-div input {
+    flex: 1; /* Makes both inputs equally wide */
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.brand-material-div input:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.category-div {
+    display: flex;
+    flex-direction: row;
+    gap: 10px; /* Adds space between the dropdowns */
+    width: 100%; /* Makes the dropdowns responsive */
+}
+
+.category-div select {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 100%; /* Ensures full-width dropdowns */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.category-div select:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.category-div select option {
+    padding: 8px;
+    background-color: #ffffff;
 }
 
 .add-product-form input[type="file"] {
     border: none;
 }
 
-.add-product-form .checkbox-group {
+.checkbox-group {
+    display: flex;
+    align-items: center; /* Aligns the checkbox and label vertically */
+    gap: 10px; /* Adds space between the checkbox and label */
+    font-size: 16px; /* Adjusts font size for readability */
+}
+
+.checkbox-group label {
     display: flex;
     align-items: center;
-    gap: 10px;
+    cursor: pointer; /* Changes the cursor to a pointer to indicate it's clickable */
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px; /* Adds space between the checkbox and label text */
+    cursor: pointer; /* Pointer cursor for the checkbox itself */
+    accent-color: #007bff; /* Adds a color for the checkbox when it's selected */
+    transition: background-color 0.3s ease; /* Smooth transition for color changes */
+}
+
+.checkbox-group input[type="checkbox"]:checked {
+    background-color: #007bff; /* Highlight color when checked */
+}
+
+.checkbox-group input[type="checkbox"]:focus {
+    outline: none; /* Removes default focus outline */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adds a focus shadow */
 }
 
 .submit-btn {
