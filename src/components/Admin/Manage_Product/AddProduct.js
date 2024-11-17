@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import './AddProduct.css'
-import {Form, FormGroup, Input, Label} from "reactstrap";
-import axios from "axios";
 import apiClient from "../../API/apiClient";
+import {Bounce, toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 export default function AddProduct() {
@@ -25,6 +26,30 @@ export default function AddProduct() {
     });
     const [categories, setCategories] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
+    const successNotify = (message) => toast.success(message, {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+    });
+    const errorNotify = (message) => toast.error(message, {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+    });
+
+
 
     // Fetch categories on component mount
     useEffect(() => {
@@ -81,7 +106,7 @@ export default function AddProduct() {
             const response = await apiClient.post("/products", data, {
                 headers: {"Content-Type": "multipart/form-data"},
             });
-            alert("Product added successfully!");
+            successNotify("Product added successfully!");
             console.log(response.data);
 
             // Reset form
@@ -103,7 +128,7 @@ export default function AddProduct() {
             });
         } catch (error) {
             console.error("Error adding product:", error);
-            alert("Failed to add product.");
+            errorNotify("Failed to add product.");
         }
     };
 
@@ -256,6 +281,7 @@ export default function AddProduct() {
                 />
                 <button type="submit" className="submit-btn">Add Product</button>
             </form>
+            <ToastContainer />
         </div>
     );
 }

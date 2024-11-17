@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from "react";
-import './AdminPage.css'
-import {CgProfile} from "react-icons/cg";
-import {FaCog, FaUsers, FaProductHunt, FaShoppingCart} from "react-icons/fa";
-import {MdDashboard} from "react-icons/md";
+import React, { useEffect, useState } from "react";
+import './AdminPage.css';
+import { CgProfile } from "react-icons/cg";
+import { FaCog, FaUsers, FaProductHunt, FaShoppingCart } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
 import Dashboard from "./Dashboard";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ManageProduct from "./Manage_Product/ManageProduct";
 import AddProduct from "./Manage_Product/AddProduct";
 import ViewProduct from "./Manage_Product/ViewProduct";
@@ -12,6 +11,7 @@ import UpdateProductPage from "./Manage_Product/UpdateProductPage";
 
 export default function AdminPage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
+    const [currentComponent, setCurrentComponent] = useState("dashboard"); // Tracks which component to render
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -33,6 +33,24 @@ export default function AdminPage() {
         };
     }, []);
 
+    // Function to dynamically render the selected component
+    const renderComponent = () => {
+        switch (currentComponent) {
+            case "dashboard":
+                return <Dashboard />;
+            case "manage-product":
+                return <ManageProduct />;
+            case "add-product":
+                return <AddProduct />;
+            case "view-product":
+                return <ViewProduct />;
+            case "update-product":
+                return <UpdateProductPage />;
+            default:
+                return <Dashboard />;
+        }
+    };
+
     return (
         <div className="admin-page">
             <header className="navbar">
@@ -41,46 +59,60 @@ export default function AdminPage() {
                 </button>
                 <div className="logo">AdminPanel</div>
                 <div className="search-bar">
-                    <input type="text" placeholder="Search..."/>
+                    <input type="text" placeholder="Search..." />
                 </div>
                 <div className="nav-icons">
-                    <a className="icon"><CgProfile/></a>
-                    <a className="icon"><FaCog/></a>
+                    <a className="icon"><CgProfile /></a>
+                    <a className="icon"><FaCog /></a>
                 </div>
             </header>
 
             <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
                 <ul>
-                    <a className="admin-sidebar-link" href="/"
-                       style={{textDecoration: "none", color: "black"}}>
-                        <li><MdDashboard/> Dashboard</li>
-                    </a>
-
-                    <a className="admin-sidebar-link" href="/manage-product"
-                       style={{textDecoration: "none", color: "black"}}>
-                        <li><FaProductHunt/> Manage Products</li>
-                    </a>
-
-                    <li><FaUsers/> Manage Users</li>
-                    <li><FaShoppingCart/> Manage Orders</li>
-                    <li><FaCog/> Settings</li>
+                    <li
+                        className="admin-sidebar-link"
+                        style={{ textDecoration: "none", color: "black" }}
+                        onClick={() => setCurrentComponent("dashboard")}
+                    >
+                        <MdDashboard /> Dashboard
+                    </li>
+                    {/*
+                    <li
+                        className="admin-sidebar-link"
+                        style={{ textDecoration: "none", color: "black" }}
+                        onClick={() => setCurrentComponent("manage-product")}
+                    >
+                        <FaProductHunt /> Manage Products
+                    </li>*/}
+                    <li
+                        className="admin-sidebar-link"
+                        style={{ textDecoration: "none", color: "black" }}
+                        onClick={() => setCurrentComponent("add-product")}
+                    >
+                        <FaProductHunt /> Add Product
+                    </li>
+                    <li
+                        className="admin-sidebar-link"
+                        style={{ textDecoration: "none", color: "black" }}
+                        onClick={() => setCurrentComponent("view-product")}
+                    >
+                        <FaProductHunt /> View Products
+                    </li>
+                    <li
+                        className="admin-sidebar-link"
+                        style={{ textDecoration: "none", color: "black" }}
+                        onClick={() => setCurrentComponent("update-product")}
+                    >
+                        <FaProductHunt /> Update Product
+                    </li>
+                    <li><FaUsers /> Manage Users</li>
+                    <li><FaShoppingCart /> Manage Orders</li>
+                    <li><FaCog /> Settings</li>
                 </ul>
             </div>
 
             <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
-
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<Dashboard/>}/>
-                    </Routes>
-                    <Routes>
-                        <Route path="/manage-product" element={<ManageProduct/>}/>
-                        <Route path="/addProduct" element={<AddProduct/>}/>
-                        <Route path="/viewProduct" element={<ViewProduct/>}/>
-                        <Route path="/update-product/:productId" component={UpdateProductPage} />
-                    </Routes>
-
-                </BrowserRouter>
+                {renderComponent()}
             </main>
         </div>
     );

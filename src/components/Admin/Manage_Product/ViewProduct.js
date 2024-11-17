@@ -3,10 +3,38 @@ import './ViewProduct.css'
 import {Link} from "react-router-dom";
 import axios from "axios";
 import apiClient from "../../API/apiClient";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import {Bounce, toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function ViewProduct() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const successNotify = (message) => toast.success(message, {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+    });
+    const errorNotify = (message) => toast.error(message, {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        transition: Bounce,
+    });
+
 
     // Fetch all products on component mount
     useEffect(() => {
@@ -25,11 +53,11 @@ export default function ViewProduct() {
     const handleDelete = (productId) => {
         apiClient.delete(`/products/${productId}`)
             .then(response => {
-                alert('Product deleted successfully');
+                successNotify('Product deleted successfully')
                 setProducts(products.filter(product => product.id !== productId));
             })
             .catch(error => {
-                alert('Error deleting product');
+                errorNotify('Error deleting product');
                 console.error(error);
             });
     };
@@ -39,7 +67,10 @@ export default function ViewProduct() {
         <div className="product-view-container">
             <h2>Product List</h2>
             {loading ? (
-                <p>Loading products...</p>
+                <div align="center">
+                    <CircularProgress/>
+                    <p>Loading products...</p>
+                </div>
             ) : (
                 <table className="product-table">
                     <thead>
@@ -75,6 +106,7 @@ export default function ViewProduct() {
                     </tbody>
                 </table>
             )}
+            <ToastContainer />
         </div>
     );
 }

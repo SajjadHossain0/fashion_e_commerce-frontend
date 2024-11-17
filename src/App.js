@@ -1,18 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from "./components/Footer/Footer";
 import HomePage from "./components/Home/HomePage";
 import AdminPage from "./components/Admin/AdminPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
-  return (
-    <div className="App">
-        <AdminPage/>
-        {/*<HomePage />*/}
-        {/*<Footer />*/}
-    </div>
-  );
+    return (
+        <div className="App">
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/admin-dashboard" element={<AdminPage />} />
+                </Routes>
+            </BrowserRouter>
+        </div>
+    );
 }
 
 export default App;

@@ -3,6 +3,7 @@ import "./HomePage.css";
 import ProductCard from "../ProductCard";
 import {CgProfile} from "react-icons/cg";
 import {FaCartPlus} from "react-icons/fa";
+import Footer from "../Footer/Footer";
 
 export default function HomePage() {
 
@@ -65,6 +66,7 @@ export default function HomePage() {
                     ))}
                 </div>
             </main>
+            <Footer />
         </div>
     );
 }
