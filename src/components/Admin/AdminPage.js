@@ -7,7 +7,6 @@ import Dashboard from "./Dashboard";
 import ManageProduct from "./Manage_Product/ManageProduct";
 import AddProduct from "./Manage_Product/AddProduct";
 import ViewProduct from "./Manage_Product/ViewProduct";
-import UpdateProductPage from "./Manage_Product/UpdateProductPage";
 
 export default function AdminPage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
@@ -43,9 +42,7 @@ export default function AdminPage() {
             case "add-product":
                 return <AddProduct />;
             case "view-product":
-                return <ViewProduct />;
-            case "update-product":
-                return <UpdateProductPage />;
+                return <ViewProduct />
             default:
                 return <Dashboard />;
         }
@@ -97,13 +94,6 @@ export default function AdminPage() {
                         onClick={() => setCurrentComponent("view-product")}
                     >
                         <FaProductHunt /> View Products
-                    </li>
-                    <li
-                        className="admin-sidebar-link"
-                        style={{ textDecoration: "none", color: "black" }}
-                        onClick={() => setCurrentComponent("update-product")}
-                    >
-                        <FaProductHunt /> Update Product
                     </li>
                     <li><FaUsers /> Manage Users</li>
                     <li><FaShoppingCart /> Manage Orders</li>

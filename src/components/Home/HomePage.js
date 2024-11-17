@@ -4,10 +4,12 @@ import ProductCard from "../ProductCard";
 import {CgProfile} from "react-icons/cg";
 import {FaCartPlus} from "react-icons/fa";
 import Footer from "../Footer/Footer";
+import apiClient from "../API/apiClient";
 
 export default function HomePage() {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768); // Default based on screen size
+    const [products, setProducts] = useState([]);
 
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
@@ -23,9 +25,20 @@ export default function HomePage() {
             }
         };
 
+        // Fetch products on mount
+        const fetchProducts = async () => {
+            try {
+                const response = await apiClient.get("/products");
+                setProducts(response.data); // Set the fetched products to state
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+
+        fetchProducts();
+
         // Attach resize event listener
         window.addEventListener("resize", handleResize);
-
         // Cleanup the event listener on component unmount
         return () => {
             window.removeEventListener("resize", handleResize);
@@ -61,8 +74,14 @@ export default function HomePage() {
             <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
                 <div className="product-grid">
                     {/* Render multiple ProductCards */}
-                    {Array.from({length: 8}).map((_, i) => (
-                        <ProductCard key={i}/>
+                    {products.map((product) => (
+                        <ProductCard key={product.id}
+                                     image={`data:image/jpeg;base64,${product.image}`}
+                                     title={product.title}
+                                     description={product.description}
+                                     price={product.price}
+                                     discountedPrice={product.discountedPrice}
+                        />
                     ))}
                 </div>
             </main>
