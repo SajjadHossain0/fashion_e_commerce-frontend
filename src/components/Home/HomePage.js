@@ -7,9 +7,8 @@ import Footer from "../Footer/Footer";
 import apiClient from "../API/apiClient";
 import Advertisement from "./Advertisement";
 import ImageCard from "../ImageCard";
-import {Link, Route} from "react-router-dom";
+import {Link} from "react-router-dom";
 import ProductDetails from "./ProductDetails";
-import {Switch} from "@mui/material";
 
 export default function HomePage() {
 
@@ -22,6 +21,7 @@ export default function HomePage() {
     const [selectedSubcategory, setSelectedSubcategory] = useState(null); // Currently selected subcategory
     const [categoryProducts, setCategoryProducts] = useState([]); // Products for selected category
     const [subcategoryProducts, setSubcategoryProducts] = useState([]); // Products for selected subcategory
+    const [selectedProduct, setSelectedProduct] = useState(null); // State for selected product
 
     // Fetch all products from the API
     const fetchProducts = async () => {
@@ -69,13 +69,21 @@ export default function HomePage() {
         setSubcategories(category.subcategories || []); // Update subcategories for the selected category
         setSelectedSubcategory(null); // Reset selected subcategory
         setSubcategoryProducts([]); // Clear any subcategory products
+        setSelectedProduct(null); // Reset selected product
         fetchProductsByCategory(category.id); // Fetch products of the selected category
     };
+
 
     // Handle subcategory click - updates selected subcategory and fetches its products
     const handleSubcategoryClick = (subcategory) => {
         setSelectedSubcategory(subcategory);
+        setSelectedProduct(null); // Reset selected product
         fetchProductsBySubcategory(subcategory.id); // Fetch products of the selected subcategory
+    };
+
+    // Handle product click - update selected product to show its details
+    const handleProductClick = (product) => {
+        setSelectedProduct(product); // Update selected product to show details
     };
 
     // Toggle sidebar visibility
@@ -95,8 +103,8 @@ export default function HomePage() {
 
         fetchProducts(); // Fetch all products
         fetchCategories(); // Fetch all categories
-        window.addEventListener("resize", handleResize); // Add resize event listener
 
+        window.addEventListener("resize", handleResize); // Add resize event listener
         // Cleanup function to remove event listener on component unmount
         return () => {
             window.removeEventListener("resize", handleResize);
@@ -143,49 +151,88 @@ export default function HomePage() {
 
             {/* Main content section */}
             <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
-
-                {/* Display advertisements and categories if no category is selected */}
-                {!selectedCategory && (
+                {selectedProduct ? (
+                    <ProductDetails product={selectedProduct}/>
+                ) : (
                     <>
-                        <div className="ads-div">
-                            <Advertisement/> {/* Advertisement component */}
-                        </div>
+                        {/* Display advertisements and categories if no category is selected */}
+                        {!selectedCategory && (
+                            <>
+                                <div className="ads-div">
+                                    <Advertisement/> {/* Advertisement component */}
+                                </div>
 
-                        <div className="category-image-grid-div">
-                            <div className="category-image-grid">
-                                {categories.map((category) => (
-                                    <ImageCard
-                                        key={category.id}
-                                        text={category.name}
-                                        imageSrc={`data:image/jpeg;base64,${category.image}`}
-                                        onClick={() => handleCategoryClick(category)} // Show subcategories on category click
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                    </>
-                )}
+                                <div className="category-image-grid-div">
+                                    <div className="category-image-grid">
+                                        {categories.map((category) => (
+                                            <ImageCard
+                                                key={category.id}
+                                                text={category.name}
+                                                imageSrc={`data:image/jpeg;base64,${category.image}`}
+                                                onClick={() => handleCategoryClick(category)} // Show subcategories on category click
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            </>
+                        )}
 
-                {/* Display subcategories and products for the selected category */}
-                {selectedCategory && (
-                    <>
-                        <div className="subcategory-image-grid-div">
-                            <div className="subcategory-image-grid">
-                                {subcategories.map((subcategory) => (
-                                    <ImageCard
-                                        key={subcategory.id}
-                                        text={subcategory.name}
-                                        imageSrc={`data:image/jpeg;base64,${subcategory.image}`}
-                                        onClick={() => handleSubcategoryClick(subcategory)} // Show products on subcategory click
-                                    />
-                                ))}
-                            </div>
-                        </div>
+                        {/* Display subcategories and products for the selected category */}
+                        {selectedCategory && (
+                            <>
+                                <div className="subcategory-image-grid-div">
+                                    <div className="subcategory-image-grid">
+                                        {subcategories.map((subcategory) => (
+                                            <ImageCard
+                                                key={subcategory.id}
+                                                text={subcategory.name}
+                                                imageSrc={`data:image/jpeg;base64,${subcategory.image}`}
+                                                onClick={() => handleSubcategoryClick(subcategory)} // Show products on subcategory click
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
 
-                        {selectedSubcategory && (
-                            <div className="product-grid-div">
-                                <div className="product-grid">
-                                    {subcategoryProducts.map((product) => (
+                                {selectedSubcategory && (
+                                    <div className="product-grid-div">
+                                        <div className="product-grid">
+                                            {subcategoryProducts.map((product) => (
+                                                <ProductCard
+                                                    key={product.id}
+                                                    image={`data:image/jpeg;base64,${product.image}`}
+                                                    title={product.title}
+                                                    description={product.description}
+                                                    price={product.price}
+                                                    discountedPrice={product.discountedPrice}
+                                                    onClick={() => handleProductClick(product)}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
+                                <div className="product-grid-div">
+                                    <div className="product-grid">
+                                        {categoryProducts.map((product) => (
+                                            <ProductCard
+                                                key={product.id}
+                                                image={`data:image/jpeg;base64,${product.image}`}
+                                                title={product.title}
+                                                description={product.description}
+                                                price={product.price}
+                                                discountedPrice={product.discountedPrice}
+                                                onClick={() => handleProductClick(product)}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            </>
+                        )}
+
+                        {/* Display all products if no category or subcategory is selected */}
+                        <div className="product-grid-div">
+                            <div className="product-grid">
+                                {products.map((product) => (
                                         <ProductCard
                                             key={product.id}
                                             image={`data:image/jpeg;base64,${product.image}`}
@@ -193,46 +240,13 @@ export default function HomePage() {
                                             description={product.description}
                                             price={product.price}
                                             discountedPrice={product.discountedPrice}
+                                            onClick={() => handleProductClick(product)}
                                         />
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        <div className="product-grid-div">
-                            <div className="product-grid">
-                                {categoryProducts.map((product) => (
-                                    <ProductCard
-                                        key={product.id}
-                                        image={`data:image/jpeg;base64,${product.image}`}
-                                        title={product.title}
-                                        description={product.description}
-                                        price={product.price}
-                                        discountedPrice={product.discountedPrice}
-                                    />
                                 ))}
                             </div>
                         </div>
                     </>
                 )}
-
-                {/* Display all products if no category or subcategory is selected */}
-                <div className="product-grid-div">
-                    <div className="product-grid">
-                        {products.map((product) => (
-                            <Link key={product.id} to={`/product/${product.id}`} className="product-link">
-                                <ProductCard
-                                    key={product.id}
-                                    image={`data:image/jpeg;base64,${product.image}`}
-                                    title={product.title}
-                                    description={product.description}
-                                    price={product.price}
-                                    discountedPrice={product.discountedPrice}
-                                />
-                            </Link>
-                        ))}
-                    </div>
-                </div>
             </main>
 
             {/* Footer section */}

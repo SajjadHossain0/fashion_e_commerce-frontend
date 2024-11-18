@@ -6,7 +6,7 @@ export default function ProductCard(props) {
     return (
         <div>
             <a href="#" style={{ textDecoration: "none", color: "black" }}>
-                <div className="product-card">
+                <div className="product-card" onClick={props.onClick}>
                     <img
                         src={props.image}
                         alt={props.title}

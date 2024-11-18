@@ -19,14 +19,14 @@
 }
 
 /* Product Image */
-.product-image {
+.product-detail-page-product-image {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.product-detail-image {
+.product-detail-page-product-detail-image {
     max-width: 100%;
     max-height: 500px;
     object-fit: contain;
@@ -34,49 +34,49 @@
 }
 
 /* Product Info */
-.product-info {
+.product-detail-page-product-info {
     flex: 1.5;
     padding-left: 20px;
 }
 
 /* Title */
-.product-title {
+.product-detail-page-product-title {
     font-size: 2rem;
     font-weight: bold;
     color: #333;
 }
 
 /* Description */
-.product-description {
+.product-detail-page-product-description {
     margin: 20px 0;
     font-size: 1rem;
     color: #555;
 }
 
 /* Price Section */
-.product-price-section {
+.product-detail-page-product-price-section {
     margin: 20px 0;
 }
 
-.product-price {
+.product-detail-page-product-price {
     font-size: 1.5rem;
     font-weight: bold;
     color: #e74c3c;
     text-decoration: line-through;
 }
 
-.product-discounted-price {
+.product-detail-page-product-discounted-price {
     font-size: 1.5rem;
     font-weight: bold;
     color: #2ecc71;
 }
 
 /* Size selection */
-.product-size {
+.product-detail-page-product-size {
     margin: 20px 0;
 }
 
-.size-select {
+.product-detail-page-size-select {
     padding: 8px;
     font-size: 1rem;
     border: 1px solid #ccc;
@@ -84,11 +84,11 @@
 }
 
 /* Quantity selection */
-.product-quantity {
+.product-detail-page-product-quantity {
     margin: 20px 0;
 }
 
-.quantity-input {
+.product-detail-page-quantity-input {
     width: 80px;
     padding: 8px;
     font-size: 1rem;
@@ -98,11 +98,11 @@
 }
 
 /* Add to Cart Button */
-.add-to-cart-btn-container {
+.product-detail-page-add-to-cart-btn-container {
     margin-top: 30px;
 }
 
-.add-to-cart-btn {
+.product-detail-page-add-to-cart-btn {
     background-color: #3498db;
     color: white;
     font-size: 1.2rem;
@@ -113,6 +113,6 @@
     transition: background-color 0.3s ease;
 }
 
-.add-to-cart-btn:hover {
+.product-detail-page-add-to-cart-btn:hover {
     background-color: #2980b9;
 }
