@@ -5,25 +5,25 @@ import {FaHotjar} from "react-icons/fa";
 export default function ProductCard(props) {
     return (
         <div>
-            <a href="" style={{textDecoration: "none", color: "black"}}>
+            <a href="#" style={{ textDecoration: "none", color: "black" }}>
                 <div className="product-card">
-                    {/*<div className="tag"><FaHotjar /> Hot</div>*/}
-                    <br/>
                     <img
                         src={props.image}
                         alt={props.title}
                     />
-
                     <h3>{props.title}</h3>
                     <p>{props.description}</p>
                     <div className="original-price">৳{props.price}</div>
                     <div className="discount-price">৳{props.discountedPrice}</div>
-                    <button className="add-to-cart-btn"><a href="">Add to Cart</a></button>
+                    <button className="add-to-cart-btn">
+                        <a href="#">Add to Cart</a>
+                    </button>
                 </div>
             </a>
         </div>
-    )
+    );
 }
+
 
 /*
 <a href="" style={{textDecoration:"none",color:"black"}}>

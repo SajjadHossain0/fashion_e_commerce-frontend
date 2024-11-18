@@ -7,12 +7,12 @@
 }
 
 .carousel-slides {
-    display: flex;
-    transition: transform 0.5s ease;
+    display: flex;               /* Display images in a row */
+    transition: transform 0.5s ease;  /* Smooth transition between slides */
 }
 
 .carousel-slide {
-    min-width: 100%;
+    min-width: 100%;             /* Each slide takes up full width */
 }
 
 .carousel-slide img {
@@ -38,5 +38,5 @@
 }
 
 .dot.active {
-    background-color: #333;
+    background-color: #333;     /* Highlight active dot */
 }

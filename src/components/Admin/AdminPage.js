@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import './AdminPage.css';
-import { CgProfile } from "react-icons/cg";
-import { FaCog, FaUsers, FaProductHunt, FaShoppingCart } from "react-icons/fa";
-import { MdDashboard } from "react-icons/md";
+import {CgProfile} from "react-icons/cg";
+import {FaCog, FaUsers, FaProductHunt, FaShoppingCart} from "react-icons/fa";
+import {MdDashboard} from "react-icons/md";
 import Dashboard from "./Dashboard";
-import ManageProduct from "./Manage_Product/ManageProduct";
-import AddProduct from "./Manage_Product/AddProduct";
-import ViewProduct from "./Manage_Product/ViewProduct";
+import ManageProduct from "./ManageProduct";
+import AddProduct from "./AddProduct";
+import ViewProduct from "./ViewProduct";
+import AddCategories from "./AddCategories";
+import AddAdvertisement from "./AddAdvertisement";
+import ShippingCharge from "./ShippingCharge";
 
 export default function AdminPage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
@@ -36,15 +39,22 @@ export default function AdminPage() {
     const renderComponent = () => {
         switch (currentComponent) {
             case "dashboard":
-                return <Dashboard />;
+                return <Dashboard/>;
             case "manage-product":
-                return <ManageProduct />;
+                return <ManageProduct/>;
             case "add-product":
-                return <AddProduct />;
+                return <AddProduct/>;
             case "view-product":
-                return <ViewProduct />
+                return <ViewProduct/>
+            case "add-categories":
+                return <AddCategories/>
+            case "add-advertisement":
+                return <AddAdvertisement/>
+            case "set-shipping-charge":
+                return <ShippingCharge/>
+
             default:
-                return <Dashboard />;
+                return <Dashboard/>;
         }
     };
 
@@ -56,22 +66,19 @@ export default function AdminPage() {
                 </button>
                 <div className="logo">AdminPanel</div>
                 <div className="search-bar">
-                    <input type="text" placeholder="Search..." />
+                    <input type="text" placeholder="Search..."/>
                 </div>
                 <div className="nav-icons">
-                    <a className="icon"><CgProfile /></a>
-                    <a className="icon"><FaCog /></a>
+                    <a className="icon"><CgProfile/></a>
+                    <a className="icon"><FaCog/></a>
                 </div>
             </header>
 
             <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
                 <ul>
-                    <li
-                        className="admin-sidebar-link"
-                        style={{ textDecoration: "none", color: "black" }}
-                        onClick={() => setCurrentComponent("dashboard")}
-                    >
-                        <MdDashboard /> Dashboard
+                    <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
+                        onClick={() => setCurrentComponent("dashboard")}>
+                        <MdDashboard/> Dashboard
                     </li>
                     {/*
                     <li
@@ -81,23 +88,30 @@ export default function AdminPage() {
                     >
                         <FaProductHunt /> Manage Products
                     </li>*/}
-                    <li
-                        className="admin-sidebar-link"
-                        style={{ textDecoration: "none", color: "black" }}
-                        onClick={() => setCurrentComponent("add-product")}
-                    >
-                        <FaProductHunt /> Add Product
+                    <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
+                        onClick={() => setCurrentComponent("add-product")}>
+                        <FaProductHunt/> Add Product
                     </li>
-                    <li
-                        className="admin-sidebar-link"
-                        style={{ textDecoration: "none", color: "black" }}
-                        onClick={() => setCurrentComponent("view-product")}
-                    >
-                        <FaProductHunt /> View Products
+                    <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
+                        onClick={() => setCurrentComponent("view-product")}>
+                        <FaProductHunt/> View Products
                     </li>
-                    <li><FaUsers /> Manage Users</li>
-                    <li><FaShoppingCart /> Manage Orders</li>
-                    <li><FaCog /> Settings</li>
+                    <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
+                        onClick={() => setCurrentComponent("add-categories")}>
+                        <FaProductHunt/> Manage Categories
+                    </li>
+                    <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
+                        onClick={() => setCurrentComponent("add-advertisement")}>
+                        <FaProductHunt/> Manage Ads
+                    </li>
+                    <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
+                        onClick={() => setCurrentComponent("set-shipping-charge")}>
+                        <FaProductHunt/> Set Shipping Charge
+                    </li>
+
+                    <li><FaUsers/> Manage Users</li>
+                    <li><FaShoppingCart/> Manage Orders</li>
+                    <li><FaCog/> Settings</li>
                 </ul>
             </div>
 

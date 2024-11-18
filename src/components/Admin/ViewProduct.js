@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './ViewProduct.css';
 import { Link } from "react-router-dom";
 import axios from "axios";
-import apiClient from "../../API/apiClient";
+import apiClient from "../API/apiClient";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { Bounce, toast, ToastContainer } from "react-toastify";
@@ -131,6 +131,8 @@ export default function ViewProduct() {
                 <table className="product-table">
                     <thead>
                     <tr>
+                        <th>S/L</th>
+                        <th>Image</th>
                         <th>Title</th>
                         <th>Price</th>
                         <th>Discount-Price</th>
@@ -141,8 +143,10 @@ export default function ViewProduct() {
                     </tr>
                     </thead>
                     <tbody>
-                    {products.map((product) => (
+                    {products.map((product,index) => (
                         <tr key={product.id}>
+                            <td>{index+1}</td>
+                            <td><img src={`data:image/jpeg;base64,${product.image}`} alt={product.title} height="100" width="100"/></td>
                             <td>{product.title}</td>
                             <td>৳{product.price}</td>
                             <td>৳{product.discountedPrice}</td>

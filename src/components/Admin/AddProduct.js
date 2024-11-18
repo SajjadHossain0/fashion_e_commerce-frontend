@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './AddProduct.css'
-import apiClient from "../../API/apiClient";
+import apiClient from "../API/apiClient";
 import {Bounce, toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
