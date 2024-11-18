@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import apiClient from "../API/apiClient";
 import "./AddAdvertisement.css";
+import errorNotify from "../errorNotify";
+import successNotify from "../successNotify";
+import {ToastContainer} from "react-toastify";
 
 export default function AddAdvertisement() {
     const [ads, setAds] = useState([]);
@@ -25,7 +28,7 @@ export default function AddAdvertisement() {
     const handleAddAdvertisement = async (e) => {
         e.preventDefault();
         if (!adTitle || !adImage) {
-            alert("Please fill in all fields.");
+            errorNotify("Please fill in all fields.");
             return;
         }
 
@@ -37,7 +40,7 @@ export default function AddAdvertisement() {
             const response = await apiClient.post("/ads", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             });
-            alert("Advertisement added successfully!");
+            successNotify("Advertisement added successfully!");
             setAdTitle("");
             setAdImage(null);
             fetchAdvertisements(); // Refresh advertisements
@@ -54,9 +57,10 @@ export default function AddAdvertisement() {
 
         try {
             await apiClient.delete(`/ads/${id}`);
-            alert("Advertisement deleted successfully!");
+            successNotify("Advertisement deleted successfully!");
             fetchAdvertisements(); // Refresh advertisements
         } catch (error) {
+            errorNotify("Error deleting advertisement")
             console.error("Error deleting advertisement:", error);
         }
     };
@@ -107,6 +111,7 @@ export default function AddAdvertisement() {
                     ))}
                 </div>
             </div>
+            <ToastContainer/>
         </div>
     );
 }

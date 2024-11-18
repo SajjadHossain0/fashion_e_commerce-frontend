@@ -1,0 +1,30 @@
+/* Loader.css */
+.loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.loader {
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.loader-text {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 500;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

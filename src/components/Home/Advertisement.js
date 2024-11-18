@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Advertisement.css';
-import apiClient from '../API/apiClient';  // Ensure your API client is correctly imported
+import apiClient from '../API/apiClient';
+import CircularLoading from "../CircularLoading";  // Ensure your API client is correctly imported
 
 const Advertisement = () => {
     const [ads, setAds] = useState([]);
@@ -38,7 +39,7 @@ const Advertisement = () => {
     };
 
     // If ads are not yet loaded, show loading message
-    if (ads.length === 0) return <p>Loading advertisements...</p>;
+    if (ads.length === 0) return <CircularLoading/>;
 
     return (
         <div className="carousel">

@@ -3,6 +3,8 @@ import './AddProduct.css'
 import apiClient from "../API/apiClient";
 import {Bounce, toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import successNotify from "../successNotify";
+import errorNotify from "../errorNotify";
 
 
 
@@ -26,28 +28,7 @@ export default function AddProduct() {
     });
     const [categories, setCategories] = useState([]);
     const [subCategories, setSubCategories] = useState([]);
-    const successNotify = (message) => toast.success(message, {
-        position: "bottom-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-    });
-    const errorNotify = (message) => toast.error(message, {
-        position: "bottom-left",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-        transition: Bounce,
-    });
+
 
 
 

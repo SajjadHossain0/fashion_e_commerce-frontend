@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import apiClient from "../API/apiClient"; // Use your configured API client
 import './ShppingCharge.css'
+import successNotify from "../successNotify";
+import errorNotify from "../errorNotify";
+import CircularLoading from "../CircularLoading";
 const ShippingCharge = () => {
     const [chargeDhaka, setChargeDhaka] = useState(0);
     const [chargeOutsideDhaka, setChargeOutsideDhaka] = useState(0);
@@ -15,7 +18,7 @@ const ShippingCharge = () => {
             setChargeOutsideDhaka(response.data.chargeOutsideDhaka);
         } catch (error) {
             console.error("Error fetching shipping charges:", error);
-            alert("Failed to load shipping charges. Please try again later.");
+            errorNotify("Failed to load shipping charges. Please try again later.");
         } finally {
             setLoading(false);
         }
@@ -24,7 +27,7 @@ const ShippingCharge = () => {
     // Update shipping charges
     const updateShippingCharges = async () => {
         if (chargeDhaka < 0 || chargeOutsideDhaka < 0) {
-            alert("Shipping charges must be non-negative.");
+            errorNotify("Shipping charges must be non-negative.");
             return;
         }
 
@@ -33,10 +36,10 @@ const ShippingCharge = () => {
             await apiClient.post("/shipping/set", null, {
                 params: { chargeDhaka, chargeOutsideDhaka },
             });
-            alert("Shipping charges updated successfully!");
+            successNotify("Shipping charges updated successfully!");
         } catch (error) {
             console.error("Error updating shipping charges:", error);
-            alert("Failed to update shipping charges. Please try again.");
+            errorNotify("Failed to update shipping charges. Please try again.");
         } finally {
             setUpdating(false);
         }
@@ -47,7 +50,9 @@ const ShippingCharge = () => {
         fetchShippingCharges();
     }, []);
 
-    if (loading) return <p>Loading shipping charges...</p>;
+    if (loading) return (
+        <CircularLoading/>
+    );
 
     return (
         <div className="shipping-charge-page">

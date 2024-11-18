@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import apiClient from "../API/apiClient";
 import "./AddCategories.css";
+import errorNotify from "../errorNotify";
+import successNotify from "../successNotify";
+import {ToastContainer} from "react-toastify";
 
 export default function AddCategories() {
     const [categories, setCategories] = useState([]);
@@ -30,7 +33,7 @@ export default function AddCategories() {
     const handleAddCategory = async (e) => {
         e.preventDefault();
         if (!categoryName || !categoryImage) {
-            alert("Please fill in all fields for the category.");
+            errorNotify("Please fill in all fields for the category.");
             return;
         }
 
@@ -43,7 +46,7 @@ export default function AddCategories() {
                 headers: { "Content-Type": "multipart/form-data" },
             });
             console.log("Added category:", response.data);
-            alert("Category added successfully!");
+            successNotify("Category added successfully!");
             setCategoryName("");
             setCategoryImage(null);
             fetchCategories();
@@ -56,7 +59,7 @@ export default function AddCategories() {
     const handleAddSubcategory = async (e) => {
         e.preventDefault();
         if (!subcategoryName || !subcategoryImage || !selectedCategoryId) {
-            alert("Please fill in all fields for the subcategory.");
+            errorNotify("Please fill in all fields for the subcategory.");
             return;
         }
 
@@ -73,7 +76,7 @@ export default function AddCategories() {
                 }
             );
             console.log("Added subcategory:", response.data);
-            alert("Subcategory added successfully!");
+            successNotify("Subcategory added successfully!");
             setSubcategoryName("");
             setSubcategoryImage(null);
             fetchCategories(); // Refresh categories to include the new subcategory
@@ -90,7 +93,7 @@ export default function AddCategories() {
 
         try {
             await apiClient.delete(`/categories/${categoryId}`);
-            alert("Category deleted successfully!");
+            successNotify("Category deleted successfully!");
             fetchCategories(); // Refresh categories
         } catch (error) {
             console.error("Error deleting category:", error);
@@ -105,7 +108,7 @@ export default function AddCategories() {
 
         try {
             await apiClient.delete(`/categories/subcategories/${subCategoryId}`);
-            alert("Subcategory deleted successfully!");
+            successNotify("Subcategory deleted successfully!");
             fetchCategories(); // Refresh categories
         } catch (error) {
             console.error("Error deleting subcategory:", error);
@@ -213,6 +216,7 @@ export default function AddCategories() {
                     ))}
                 </ul>
             </div>
+            <ToastContainer/>
         </div>
     );
 }
