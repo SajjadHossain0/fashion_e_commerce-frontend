@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./HomePage.css";
 import ProductCard from "../ProductCard";
-import { CgProfile } from "react-icons/cg";
-import { FaCartPlus } from "react-icons/fa";
+import {CgProfile} from "react-icons/cg";
+import {FaCartPlus} from "react-icons/fa";
 import Footer from "../Footer/Footer";
 import apiClient from "../API/apiClient";
 import Advertisement from "./Advertisement";
 import ImageCard from "../ImageCard";
+import {Link, Route} from "react-router-dom";
+import ProductDetails from "./ProductDetails";
+import {Switch} from "@mui/material";
 
 export default function HomePage() {
 
@@ -104,14 +107,15 @@ export default function HomePage() {
         <div className="homepage">
             {/* Navbar section */}
             <header className="navbar">
-                <button className="toggle-btn" onClick={toggleSidebar}>☰</button> {/* Button to toggle sidebar */}
+                <button className="toggle-btn" onClick={toggleSidebar}>☰</button>
+                {/* Button to toggle sidebar */}
                 <div className="logo">MyLogo</div>
                 <div className="search-bar">
-                    <input type="text" placeholder="Search..." /> {/* Search bar */}
+                    <input type="text" placeholder="Search..."/> {/* Search bar */}
                 </div>
                 <div className="nav-icons">
-                    <a className="icon"><CgProfile /></a> {/* Profile icon */}
-                    <a className="icon"><FaCartPlus /></a> {/* Cart icon */}
+                    <a className="icon"><CgProfile/></a> {/* Profile icon */}
+                    <a className="icon"><FaCartPlus/></a> {/* Cart icon */}
                 </div>
             </header>
 
@@ -126,7 +130,8 @@ export default function HomePage() {
                             </summary>
                             <ul className="subcategory-list">
                                 {(category.subcategories || []).map((subCategory) => (
-                                    <li key={subCategory.id} className="subcategory-item" onClick={() => handleSubcategoryClick(subCategory)}>
+                                    <li key={subCategory.id} className="subcategory-item"
+                                        onClick={() => handleSubcategoryClick(subCategory)}>
                                         {subCategory.name}
                                     </li>
                                 ))}
@@ -143,7 +148,7 @@ export default function HomePage() {
                 {!selectedCategory && (
                     <>
                         <div className="ads-div">
-                            <Advertisement /> {/* Advertisement component */}
+                            <Advertisement/> {/* Advertisement component */}
                         </div>
 
                         <div className="category-image-grid-div">
@@ -215,21 +220,23 @@ export default function HomePage() {
                 <div className="product-grid-div">
                     <div className="product-grid">
                         {products.map((product) => (
-                            <ProductCard
-                                key={product.id}
-                                image={`data:image/jpeg;base64,${product.image}`}
-                                title={product.title}
-                                description={product.description}
-                                price={product.price}
-                                discountedPrice={product.discountedPrice}
-                            />
+                            <Link key={product.id} to={`/product/${product.id}`} className="product-link">
+                                <ProductCard
+                                    key={product.id}
+                                    image={`data:image/jpeg;base64,${product.image}`}
+                                    title={product.title}
+                                    description={product.description}
+                                    price={product.price}
+                                    discountedPrice={product.discountedPrice}
+                                />
+                            </Link>
                         ))}
                     </div>
                 </div>
             </main>
 
             {/* Footer section */}
-            <Footer />
+            <Footer/>
         </div>
     );
 }
