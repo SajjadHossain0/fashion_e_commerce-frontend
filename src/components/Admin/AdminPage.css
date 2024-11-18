@@ -7,7 +7,7 @@
 }
 
 /* Navbar */
-.navbar {
+.admin-navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -21,7 +21,7 @@
     color: white;
 }
 
-.toggle-btn {
+.admin-toggle-btn {
     background: none;
     border: none;
     font-size: 24px;
@@ -29,24 +29,24 @@
     color: white;
     margin-left: 10px;
 }
-.toggle-btn:hover {
+.admin-toggle-btn:hover {
     background-color: transparent;
 }
 
-.logo {
+.admin-logo {
     font-size: 24px;
     font-weight: bold;
     color: white;
 }
 
-.search-bar input {
+.admin-search-bar input {
     padding: 10px;
     width: 300px;
     border-radius: 5px;
     border: none;
 }
 
-.nav-icons .icon {
+.admin-nav-icons .admin-icon {
     margin: 0 10px;
     font-size: 24px;
     cursor: pointer;
@@ -54,7 +54,7 @@
 }
 
 /* Sidebar */
-.sidebar {
+.admin-sidebar {
     position: fixed;
     top: 60px;
     left: 0;
@@ -66,11 +66,11 @@
     transition: transform 0.3s ease, visibility 0.3s ease;
 }
 
-.sidebar ul {
+.admin-sidebar ul {
     list-style-type: none;
 }
 
-.sidebar ul li {
+.admin-sidebar ul li {
     margin: 15px 0;
     cursor: pointer;
     font-size: 15px;
@@ -84,24 +84,24 @@
 }
 
 /* Sidebar open or closed state */
-.sidebar.open {
+.admin-sidebar.open {
     transform: translateX(0);
     visibility: visible;
 }
 
-.sidebar:not(.open) {
+.admin-sidebar:not(.open) {
     transform: translateX(-100%);
     visibility: hidden;
 }
 
 /* Main Content */
-.main-content {
+.admin-main-content {
     margin-left: 250px;
     padding: 80px 20px;
     transition: margin-left 0.3s ease;
 }
 
-.main-content.full-width {
+.admin-main-content.full-width {
     margin-left: 0;
 }
 
@@ -115,21 +115,21 @@ h1 {
 
 /* Responsive Styles */
 @media (max-width: 768px) {
-    .sidebar {
+    .admin-sidebar {
         transform: translateX(-100%);
         visibility: hidden;
     }
 
-    .sidebar.open {
+    .admin-sidebar.open {
         transform: translateX(0);
         visibility: visible;
     }
 
-    .main-content {
+    .admin-main-content {
         margin-left: 0;
     }
 
-    .search-bar input {
+    .admin-search-bar input {
         width: 100%;
     }
 }

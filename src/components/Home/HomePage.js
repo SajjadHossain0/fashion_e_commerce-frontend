@@ -117,7 +117,7 @@ export default function HomePage() {
             <header className="navbar">
                 <button className="toggle-btn" onClick={toggleSidebar}>☰</button>
                 {/* Button to toggle sidebar */}
-                <div className="logo">MyLogo</div>
+                <div className="logo"><a href="/" style={{textDecoration:"none",color:"white"}}>MyLogo</a></div>
                 <div className="search-bar">
                     <input type="text" placeholder="Search..."/> {/* Search bar */}
                 </div>

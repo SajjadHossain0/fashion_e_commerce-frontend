@@ -60,21 +60,21 @@ export default function AdminPage() {
 
     return (
         <div className="admin-page">
-            <header className="navbar">
-                <button className="toggle-btn" onClick={toggleSidebar}>
+            <header className="admin-navbar">
+                <button className="admin-toggle-btn" onClick={toggleSidebar}>
                     ☰
                 </button>
-                <div className="logo">AdminPanel</div>
-                <div className="search-bar">
+                <div className="admin-logo">AdminPanel</div>
+                <div className="admin-search-bar">
                     <input type="text" placeholder="Search..."/>
                 </div>
-                <div className="nav-icons">
-                    <a className="icon"><CgProfile/></a>
-                    <a className="icon"><FaCog/></a>
+                <div className="admin-nav-icons">
+                    <a className="admin-icon"><CgProfile/></a>
+                    <a className="admin-icon"><FaCog/></a>
                 </div>
             </header>
 
-            <div className={`sidebar ${isSidebarOpen ? "open" : ""}`}>
+            <div className={`admin-sidebar ${isSidebarOpen ? "open" : ""}`}>
                 <ul>
                     <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
                         onClick={() => setCurrentComponent("dashboard")}>
@@ -115,7 +115,7 @@ export default function AdminPage() {
                 </ul>
             </div>
 
-            <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
+            <main className={`admin-main-content ${isSidebarOpen ? "" : "full-width"}`}>
                 {renderComponent()}
             </main>
         </div>
