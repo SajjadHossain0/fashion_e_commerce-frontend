@@ -9,37 +9,12 @@ import Footer from "../Footer/Footer";
 import ImageCard from "../ImageCard";
 import apiClient from "../API/apiClient";
 import {useNavigate} from "react-router-dom";
+import HeaderWithSidebar from "../Home/HeaderWithSidebar";
 
 const AuthPage = () => {
 
     // for header and sidebar===============
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [categories, setCategories] = useState([]);
-    const [subcategories, setSubcategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [selectedSubcategory, setSelectedSubcategory] = useState(null);
-    const fetchCategories = async () => {
-        try {
-            const response = await apiClient.get("/categories");
-            setCategories(response.data);
-        } catch (error) {
-            console.error("Error fetching categories:", error);
-        }
-    };
-    const navigate = useNavigate();
-    const handleCategoryClick = (category) => {
-        navigate(`/category/${category.id}`); // Redirect to category-specific page
-    };
-    const handleSubcategoryClick = (subcategory) => {
-        navigate(`/subcategory/${subcategory.id}`); // Navigate to Subcategory Page
-    };
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
-    useEffect(() => {
-        fetchCategories();
-    }, []);
-    //=================================
 
     const [isLogin, setIsLogin] = useState(true);
 
@@ -49,13 +24,7 @@ const AuthPage = () => {
         <>
             <div className="homepage">
                 <>
-                    <Header toggleSidebar={toggleSidebar}/>
-                    <Sidebar
-                        isSidebarOpen={isSidebarOpen}
-                        categories={categories}
-                        handleCategoryClick={handleCategoryClick}
-                        handleSubcategoryClick={handleSubcategoryClick}
-                    />
+                    <HeaderWithSidebar/>
                 </>
 
                 <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>

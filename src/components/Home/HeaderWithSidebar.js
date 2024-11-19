@@ -1,20 +1,40 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { CgProfile } from "react-icons/cg";
-import { FaCartPlus } from "react-icons/fa";
-import { TiThMenu } from "react-icons/ti";
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {CgProfile} from "react-icons/cg";
+import {FaCartPlus, FaSearch} from "react-icons/fa";
+import {TiThMenu} from "react-icons/ti";
 import apiClient from "../API/apiClient";
 import './HeaderWithSidebar.css'
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 
-const HeaderWithSidebar = () => {
+const HeaderWithSidebar = (args) => {
     // Shared State
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [categories, setCategories] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState("");
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isProfileDropdownOpen, setProfileDropdownOpen] = useState(false);
-
     const navigate = useNavigate();
+
+    const [modal, setModal] = useState(false);
+    const toggle = () => setModal(!modal);
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === "Enter") {
+                toggle(); // Close the modal if Enter is pressed
+            }
+        };
+
+        if (modal) {
+            // Only add the event listener when the modal is open
+            window.addEventListener('keydown', handleKeyDown);
+
+            // Clean up the event listener when the component unmounts or modal closes
+            return () => {
+                window.removeEventListener('keydown', handleKeyDown);
+            };
+        }
+    }, [modal]);
 
     // Fetch Categories
     const fetchCategories = async () => {
@@ -67,14 +87,16 @@ const HeaderWithSidebar = () => {
             {/* Header */}
             <header className="navbar">
                 <button className="toggle-btn" onClick={toggleSidebar}>
-                    <TiThMenu />
+                    <TiThMenu/>
                 </button>
                 <div className="logo">
-                    <a href="/" style={{ textDecoration: "none", color: "white" }}>
+                    <a href="/" style={{textDecoration: "none", color: "white"}}>
                         MyLogo
                     </a>
                 </div>
+
                 <div className="search-bar">
+
                     <form onSubmit={handleSearch}>
                         <input
                             type="text"
@@ -85,24 +107,51 @@ const HeaderWithSidebar = () => {
                     </form>
                 </div>
                 <div className="nav-icons">
+                    {/*search icon*/}
+                    <>
+                        <a style={{textDecoration: "none", color: "white"}}
+                           className="icon"
+                           onClick={toggle}
+                        >
+                            <div className="search-icon">
+                                <FaSearch/>
+                            </div>
+                        </a>
+                        <Modal isOpen={modal} toggle={toggle} {...args}>
+                            <ModalHeader toggle={toggle}>Search...</ModalHeader>
+                            <ModalBody>
+                                <form onSubmit={handleSearch}>
+                                    <input
+                                        type="text"
+                                        placeholder="Search..."
+                                        value={searchKeyword}
+                                        onChange={(e) => setSearchKeyword(e.target.value)}
+                                    />
+                                </form>
+                            </ModalBody>
+                        </Modal>
+                    </>
+
+
+                    {/*profile icon*/}
                     <div className="profile-dropdown">
                         <a className="icon" onClick={handleProfileClick}>
-                            <CgProfile />
+                            <CgProfile/>
                         </a>
                         {isProfileDropdownOpen && (
                             <div className="dropdown-menu">
                                 <ul>
                                     {!isAuthenticated && (
-                                        <a href="/auth" style={{ textDecoration: "none", color: "black" }}>
+                                        <a href="/auth" style={{textDecoration: "none", color: "black"}}>
                                             <li>Login</li>
                                         </a>
                                     )}
                                     {isAuthenticated && (
-                                        <a href="/auth" style={{ textDecoration: "none", color: "black" }}>
+                                        <a href="/auth" style={{textDecoration: "none", color: "black"}}>
                                             <li onClick={handleLogout}>Logout</li>
                                         </a>
                                     )}
-                                    <a href="/profile" style={{ textDecoration: "none", color: "black" }}>
+                                    <a href="/profile" style={{textDecoration: "none", color: "black"}}>
                                         <li>Profile</li>
                                     </a>
                                     <li>Order</li>
@@ -110,8 +159,10 @@ const HeaderWithSidebar = () => {
                             </div>
                         )}
                     </div>
-                    <a href="/cart" style={{ textDecoration: "none", color: "white" }} className="icon">
-                        <FaCartPlus />
+
+                    {/*cart icon*/}
+                    <a href="/cart" style={{textDecoration: "none", color: "white"}} className="icon">
+                        <FaCartPlus/>
                     </a>
                 </div>
             </header>

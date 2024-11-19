@@ -1,4 +1,3 @@
-
 .navbar {
     display: flex;
     align-items: center;
@@ -23,9 +22,14 @@
     font-weight: bold;
     color: white;
 }
+.search-icon{
+    color: white;
+    font-size: 30px;
+    display: none;
+}
 .search-bar input {
     padding: 10px;
-    width: 200px;
+    width: 100%;
     border-radius: 5px;
     border: none;
 }
@@ -71,7 +75,6 @@
 .dropdown-menu ul li:hover {
     background-color: #f0f0f0;
 }
-
 .sidebar {
     position: fixed;
     top: 60px; /* Height of navbar */
@@ -113,6 +116,13 @@
 
 
 @media (max-width: 768px) {
+
+    .search-icon{
+        display: block;
+    }
+    .search-bar{
+        display: none;
+    }
     .sidebar {
         transform: translateX(-100%);
         visibility: hidden;
