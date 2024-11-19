@@ -5,40 +5,15 @@ import Sidebar from "./Sidebar";
 import Footer from "../Footer/Footer";
 import './ProductDetails.css';
 import apiClient from "../API/apiClient";
+import HeaderWithSidebar from "./HeaderWithSidebar";
 
 export default function ProductDetails() {
     const { state } = useLocation(); // Access state passed via navigate
     const product = state?.product; // Retrieve the product data
-    const navigate = useNavigate();
 
     // for header and sidebar===============
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [categories, setCategories] = useState([]);
 
-    const fetchCategories = async () => {
-        try {
-            const response = await apiClient.get("/categories");
-            setCategories(response.data);
-        } catch (error) {
-            console.error("Error fetching categories:", error);
-        }
-    };
-
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
-
-    const handleCategoryClick = (category) => {
-        navigate(`/category/${category.id}`);
-    };
-
-    const handleSubcategoryClick = (subcategory) => {
-        navigate(`/subcategory/${subcategory.id}`);
-    };
-
-    useEffect(() => {
-        fetchCategories();
-    }, []);
     //=================================
 
     const [quantity, setQuantity] = useState(1);
@@ -66,13 +41,7 @@ export default function ProductDetails() {
 
     return (
         <div className="homepage">
-            <Header toggleSidebar={toggleSidebar} />
-            <Sidebar
-                isSidebarOpen={isSidebarOpen}
-                categories={categories}
-                handleCategoryClick={handleCategoryClick}
-                handleSubcategoryClick={handleSubcategoryClick}
-            />
+            <HeaderWithSidebar/>
             <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
                 <div className="product-detail-page">
 

@@ -4,6 +4,7 @@ import { CgProfile } from "react-icons/cg";
 import { FaCartPlus } from "react-icons/fa";
 import { TiThMenu } from "react-icons/ti";
 import apiClient from "../API/apiClient";
+import './HeaderWithSidebar.css'
 
 const HeaderWithSidebar = () => {
     // Shared State

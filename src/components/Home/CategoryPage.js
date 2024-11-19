@@ -6,35 +6,14 @@ import ProductCard from "../ProductCard";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "../Footer/Footer";
+import HeaderWithSidebar from "./HeaderWithSidebar";
 
 export default function CategoryPage() {
     const { categoryId } = useParams(); // Get category ID from URL
     const [subcategories, setSubcategories] = useState([]);
     const [products, setProducts] = useState([]);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [selectedSubcategory, setSelectedSubcategory] = useState(null);
     const navigate = useNavigate();
-
-    const fetchCategories = async () => {
-        try {
-            const response = await apiClient.get("/categories");
-            setCategories(response.data);
-        } catch (error) {
-            console.error("Error fetching categories:", error);
-        }
-    };
-    const handleCategoryClick = (category) => {
-        navigate(`/category/${category.id}`); // Redirect to category-specific page
-    };
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
-    useEffect(() => {
-        fetchCategories();
-    }, []);
-
 
     useEffect(() => {
         // Fetch subcategories
@@ -73,13 +52,7 @@ export default function CategoryPage() {
         <>
             <div className="homepage">
                 <>
-                    <Header toggleSidebar={toggleSidebar}/>
-                    <Sidebar
-                        isSidebarOpen={isSidebarOpen}
-                        categories={categories}
-                        handleCategoryClick={handleSubcategoryClick}
-                        handleSubcategoryClick={handleSubcategoryClick}
-                    />
+                    <HeaderWithSidebar/>
                 </>
 
                 <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>

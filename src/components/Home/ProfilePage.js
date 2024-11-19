@@ -12,13 +12,11 @@ import ProductDetails from "./ProductDetails";
 import {TiThMenu} from "react-icons/ti";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import HeaderWithSidebar from "./HeaderWithSidebar";
 
 export default function Profile() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [categories, setCategories] = useState([]);
-    const [subcategories, setSubcategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [selectedSubcategory, setSelectedSubcategory] = useState(null);
     const navigate = useNavigate();
 
     const fetchCategories = async () => {
@@ -29,16 +27,7 @@ export default function Profile() {
             console.error("Error fetching categories:", error);
         }
     };
-    const handleCategoryClick = (category) => {
-        navigate(`/category/${category.id}`); // Redirect to category-specific page
-    };
-    const handleSubcategoryClick = (subcategory) => {
-        navigate(`/subcategory/${subcategory.id}`); // Navigate to Subcategory Page
-    };
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
     useEffect(() => {
         fetchCategories();
     }, []);
@@ -46,13 +35,7 @@ export default function Profile() {
 
     return (
         <div className="homepage">
-            <Header toggleSidebar={toggleSidebar}/>
-            <Sidebar
-                isSidebarOpen={isSidebarOpen}
-                categories={categories}
-                handleCategoryClick={handleCategoryClick}
-                handleSubcategoryClick={handleSubcategoryClick}
-            />
+            <HeaderWithSidebar/>
             <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
                 <h1>hello</h1>
             </main>

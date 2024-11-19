@@ -5,21 +5,13 @@ import Footer from "../Footer/Footer";
 import apiClient from "../API/apiClient";
 import Advertisement from "./Advertisement";
 import ImageCard from "../ImageCard";
-import ProductDetails from "./ProductDetails";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
 import {useNavigate} from "react-router-dom";
+import HeaderWithSidebar from "./HeaderWithSidebar";
 
 export default function HomePage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [subcategories, setSubcategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [selectedSubcategory, setSelectedSubcategory] = useState(null);
-    const [categoryProducts, setCategoryProducts] = useState([]);
-    const [subcategoryProducts, setSubcategoryProducts] = useState([]);
-    const [selectedProduct, setSelectedProduct] = useState(null);
 
     const fetchProducts = async () => {
         try {
@@ -39,22 +31,15 @@ export default function HomePage() {
         }
     };
 
-// Inside HomePage component
     const navigate = useNavigate();
 
     const handleCategoryClick = (category) => {
         navigate(`/category/${category.id}`); // Redirect to category-specific page
     };
-    const handleSubcategoryClick = (subcategory) => {
-        navigate(`/subcategory/${subcategory.id}`); // Navigate to Subcategory Page
-    };
     const handleProductClick = (product) => {
         navigate(`/product-details`, { state: { product } }); // Navigate to product details with data
     };
 
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
 
     useEffect(() => {
         fetchProducts();
@@ -64,13 +49,7 @@ export default function HomePage() {
     return (
         <div className="homepage">
             <>
-                <Header toggleSidebar={toggleSidebar}/>
-                <Sidebar
-                    isSidebarOpen={isSidebarOpen}
-                    categories={categories}
-                    handleCategoryClick={handleCategoryClick} // Redirect to category-specific page
-                    handleSubcategoryClick={handleSubcategoryClick} // Redirect to subcategory-specific page
-                />
+                <HeaderWithSidebar/>
             </>
 
             <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
