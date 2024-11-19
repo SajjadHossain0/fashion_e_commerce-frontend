@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import axios from "axios";
 import apiClient from "../API/apiClient";
 import ProductCard from "../ProductCard";
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-import CircularLoading from "../CircularLoading";
 import Footer from "../Footer/Footer";
+import HeaderWithSidebar from "./HeaderWithSidebar";
 
 const SearchResults = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const keyword = queryParams.get("keyword");
@@ -40,21 +38,20 @@ const SearchResults = () => {
     }
 
 
+    const handleProductClick = (product) => {
+
+        navigate(`/product-details`, { state: { product } }); // Navigate to product details with data
+    };
+
 
     return (
         <>
             <div className="homepage">
                 <>
-                    <Header toggleSidebar={toggleSidebar}/>
-                    <Sidebar
-                        isSidebarOpen={isSidebarOpen}
-                        categories={categories}
-                        handleCategoryClick={handleCategoryClick}
-                        handleSubcategoryClick={handleSubcategoryClick}
-                    />
+                    <HeaderWithSidebar/>
                 </>
 
-                <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
+                <main>
                     <div className="search-results">
                         <h2>Search results for "{keyword}"</h2>
                         {products.length > 0 ? (

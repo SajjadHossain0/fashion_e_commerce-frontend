@@ -8,19 +8,16 @@ import Footer from "../Footer/Footer";
 import Sidebar from "./Sidebar";
 import ImageCard from "../ImageCard";
 import CircularLoading from "../CircularLoading";
+import HeaderWithSidebar from "./HeaderWithSidebar";
 
 export default function SubcategoryPage() {
     const {subcategoryId} = useParams(); // Get subcategory ID from the URL
     const [subcategoryProducts, setSubcategoryProducts] = useState([]);
-    const [subcategoryName, setSubcategoryName] = useState("");
 
     // for header and sidebar===============
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const [categories, setCategories] = useState([]);
-    const [subcategories, setSubcategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [selectedSubcategory, setSelectedSubcategory] = useState(null);
     const navigate = useNavigate();
     const fetchCategories = async () => {
         try {
@@ -30,19 +27,9 @@ export default function SubcategoryPage() {
             console.error("Error fetching categories:", error);
         }
     };
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
     useEffect(() => {
         fetchCategories();
     }, []);
-    const handleCategoryClick = (category) => {
-        navigate(`/category/${category.id}`); // Redirect to category-specific page
-    };
-    const handleSubcategoryClick = (subcategory) => {
-        navigate(`/subcategory/${subcategory.id}`); // Navigate to Subcategory Page
-    };
-    //=================================
 
     const handleProductClick = (product) => {
         navigate(`/product-details`, { state: { product } }); // Navigate to product details with data
@@ -70,13 +57,7 @@ export default function SubcategoryPage() {
         <>
             <div className="homepage">
                 <>
-                    <Header toggleSidebar={toggleSidebar}/>
-                    <Sidebar
-                        isSidebarOpen={isSidebarOpen}
-                        categories={categories}
-                        handleCategoryClick={handleCategoryClick}
-                        handleSubcategoryClick={handleSubcategoryClick}
-                    />
+                    <HeaderWithSidebar/>
                 </>
 
                 <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
