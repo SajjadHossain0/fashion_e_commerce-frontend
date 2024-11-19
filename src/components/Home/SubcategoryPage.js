@@ -16,6 +16,7 @@ export default function SubcategoryPage() {
 
     // for header and sidebar===============
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
     const [categories, setCategories] = useState([]);
     const [subcategories, setSubcategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -42,6 +43,7 @@ export default function SubcategoryPage() {
         navigate(`/subcategory/${subcategory.id}`); // Navigate to Subcategory Page
     };
     //=================================
+
     const handleProductClick = (product) => {
         navigate(`/product-details`, { state: { product } }); // Navigate to product details with data
     };

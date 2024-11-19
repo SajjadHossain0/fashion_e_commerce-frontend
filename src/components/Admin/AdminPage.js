@@ -10,6 +10,7 @@ import ViewProduct from "./ViewProduct";
 import AddCategories from "./AddCategories";
 import AddAdvertisement from "./AddAdvertisement";
 import ShippingCharge from "./ShippingCharge";
+import {useNavigate} from "react-router-dom";
 
 export default function AdminPage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
@@ -19,21 +20,19 @@ export default function AdminPage() {
         setIsSidebarOpen(!isSidebarOpen);
     };
 
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
+// Check authentication on component mount
     useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth > 768) {
-                setIsSidebarOpen(true);
-            } else {
-                setIsSidebarOpen(false);
-            }
-        };
-
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
+        const token = localStorage.getItem("token");
+        setIsAuthenticated(!!token);
     }, []);
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        setIsAuthenticated(false);
+        navigate("/auth"); // Redirect to login
+    };
 
     // Function to dynamically render the selected component
     const renderComponent = () => {
@@ -69,7 +68,7 @@ export default function AdminPage() {
                     <input type="text" placeholder="Search..."/>
                 </div>
                 <div className="admin-nav-icons">
-                    <a className="admin-icon"><CgProfile/></a>
+                    <a onClick={handleLogout} className="admin-icon"><CgProfile/></a>
                     <a className="admin-icon"><FaCog/></a>
                 </div>
             </header>

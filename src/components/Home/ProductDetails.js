@@ -42,14 +42,22 @@ export default function ProductDetails() {
     //=================================
 
     const [quantity, setQuantity] = useState(1);
+    const [selectedSize, setSelectedSize] = useState(null);
+
+    const handleAddToCart = () => {
+        if (!selectedSize) {
+            alert("Please select a size!");
+            return;
+        }
+        console.log(`Added ${quantity} of ${product?.title} (Size: ${selectedSize}) to the cart`);
+    };
 
     const handleQuantityChange = (e) => {
         setQuantity(Math.max(1, e.target.value));
     };
 
-    const handleAddToCart = () => {
-        console.log(`Added ${quantity} of ${product?.title} to the cart`);
-        // Implement add-to-cart logic here
+    const handleSizeChange = (size) => {
+        setSelectedSize(size);
     };
 
     if (!product) {
@@ -58,53 +66,99 @@ export default function ProductDetails() {
 
     return (
         <div className="homepage">
-            <>
-                <Header toggleSidebar={toggleSidebar} />
-                <Sidebar
-                    isSidebarOpen={isSidebarOpen}
-                    categories={categories}
-                    handleCategoryClick={handleCategoryClick}
-                    handleSubcategoryClick={handleSubcategoryClick}
-                />
-            </>
-
+            <Header toggleSidebar={toggleSidebar} />
+            <Sidebar
+                isSidebarOpen={isSidebarOpen}
+                categories={categories}
+                handleCategoryClick={handleCategoryClick}
+                handleSubcategoryClick={handleSubcategoryClick}
+            />
             <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
                 <div className="product-detail-page">
+
                     <div className="product-detail-container">
-                        <div className="product-detail-page-product-image">
+
+                        {/* Product Image */}
+                        <div className="pd-new-image-container">
                             <img
                                 src={`data:image/jpeg;base64,${product.image}`}
                                 alt={product.title}
-                                className="product-detail-page-product-detail-image"
+                                className="pd-new-product-image"
                             />
                         </div>
-                        <div className="product-detail-page-product-info">
-                            <h1 className="product-detail-page-product-title">{product.title}</h1>
-                            <p className="product-detail-page-product-description">{product.detaileddescription}</p>
-                            <div className="product-detail-page-product-price-section">
-                                <p className="product-detail-page-product-price">${product.price}</p>
-                                {product.discountedPrice && (
-                                    <p className="product-detail-page-product-discounted-price">
-                                        ${product.discountedPrice}
+
+                        {/* Product Info */}
+                        <div className="pd-new-info-container">
+                            <h1 className="pd-new-title">{product.title}</h1>
+                            <p className="pd-new-brand">Brand: {product.brand}</p>
+                            <p className="pd-new-description">{product.detaileddescription}</p>
+                            <p className="pd-new-material">Material: {product.material}</p>
+                            <p className={`pd-new-stock-status ${
+                                product.stock > 0 ? "pd-in-stock" : "pd-out-of-stock"
+                            }`}>
+                                {product.stock > 0 ? "In Stock" : "Out of Stock"}
+                            </p>
+
+                            {/* Price */}
+                            <div className="pd-new-price-section">
+                                <p className="pd-new-price">Price: ৳{product.price.toFixed(2)}</p>
+                                {product.discount > 0 && (
+                                    <p className="pd-new-discounted-price">
+                                        Discounted Price: ৳{product.discountedPrice}
                                     </p>
                                 )}
                             </div>
-                            <div className="product-detail-page-product-quantity">
+
+                            {/* Sizes */}
+                            <div align="center" className="pd-new-size-section">
+                                <h3>Select Size</h3>
+                                <div className="pd-new-size-options">
+                                    {product.sizes.map((size) => (
+                                        <button
+                                            key={size}
+                                            className={`pd-new-size-option ${
+                                                selectedSize === size ? "pd-size-selected" : ""
+                                            }`}
+                                            onClick={() => handleSizeChange(size)}
+                                        >
+                                            {size}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Quantity */}
+                            <div className="pd-new-quantity-section">
                                 <h3>Quantity</h3>
                                 <input
                                     type="number"
                                     value={quantity}
                                     onChange={handleQuantityChange}
                                     min="1"
-                                    className="product-detail-page-quantity-input"
+                                    className="pd-new-quantity-input"
                                 />
                             </div>
-                            <div className="product-detail-page-add-to-cart-btn-container">
-                                <button onClick={handleAddToCart} className="product-detail-page-add-to-cart-btn">
-                                    Add to Cart
-                                </button>
+
+                            {/* Add to Cart */}
+                            <button
+                                onClick={handleAddToCart}
+                                className="pd-new-add-to-cart-btn"
+                                disabled={!product.available || product.stock === 0}
+                            >
+                                Add to Cart
+                            </button>
+
+                            {/* Tags */}
+                            <div className="pd-new-tags-section">
+                                <h4>Tags:</h4>
+                                {product.tags.map((tag) => (
+                                    <span key={tag} className="pd-new-tag">
+                                        {tag}
+                                    </span>
+                                ))}
                             </div>
                         </div>
+
                     </div>
                 </div>
             </main>
