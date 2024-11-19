@@ -24,11 +24,11 @@
 
 /* Styling for the product image */
 .product-card img {
-    width: 100%;
-    height: auto; /* Allow the height to adjust dynamically */
+    width: 100%; /* Full width of the container */
+    height: 200px; /* Set a fixed height for uniformity */
     border-radius: 10px;
     margin-bottom: 15px;
-    object-fit: cover; /* Ensure the image covers the space properly */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
 }
 
 /* Title styling */

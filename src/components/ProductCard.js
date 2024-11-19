@@ -3,16 +3,25 @@ import './ProductCard.css'
 import {FaHotjar} from "react-icons/fa";
 
 export default function ProductCard(props) {
+
+    // Function to truncate text
+    const truncateText = (text, maxLength) => {
+        if (text.length > maxLength) {
+            return text.slice(0, maxLength) + '...';
+        }
+        return text;
+    };
+
     return (
         <div>
-            <a href="#" style={{ textDecoration: "none", color: "black" }}>
+            <a style={{ textDecoration: "none", color: "black" }}>
                 <div className="product-card" onClick={props.onClick}>
                     <img
                         src={props.image}
                         alt={props.title}
                     />
                     <h3>{props.title}</h3>
-                    <p>{props.description}</p>
+                    <p>{truncateText(props.description, 30)}</p>
                     <div className="original-price">৳{props.price}</div>
                     <div className="discount-price">৳{props.discountedPrice}</div>
                     <button className="add-to-cart-btn">
@@ -23,22 +32,3 @@ export default function ProductCard(props) {
         </div>
     );
 }
-
-
-/*
-<a href="" style={{textDecoration:"none",color:"black"}}>
-                <div className="product-card">
-                    {/!*<div className="tag"><FaHotjar /> Hot</div>*!/}
-<br/>
-<img
-    src="https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg"
-    alt="Product Image"
-/>
-
-<h3>Product Title</h3>
-<p>Short description of the product goes here.</p>
-<div className="original-price">৳30.00</div>
-<div className="discount-price">৳19.99</div>
-<button className="add-to-cart-btn"><a href="">Add to Cart</a></button>
-</div>
-</a>*/
