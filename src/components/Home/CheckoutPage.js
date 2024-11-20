@@ -13,17 +13,31 @@ export default function CheckoutPage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const userId = localStorage.getItem("userId");
 
+    const deleteCartItem = async () => {
+        try{
+            const response = await apiClient.delete(`/cart/clear/${userId}`);
+            console.log(response);
+        }catch(err){
+            console.log(err);
+        }
+    }
+
     const handlePlaceOrder = async () => {
         setLoading(true);
         try {
-            const response = await apiClient.post("/orders/place", {
-                userId,
-                contactInfo,
-                shippingAddress,
-                paymentMethod,
-                isDhaka
-            });
+            const response = await apiClient.post(
+                `/orders/place?userId=${userId}&contactInfo=${encodeURIComponent(
+                    contactInfo
+                )}&shippingAddress=${encodeURIComponent(
+                    shippingAddress
+                )}&paymentMethod=${paymentMethod}&isDhaka=${isDhaka}`
+            );
+
             alert("Order placed successfully!");
+            deleteCartItem();
+            setContactInfo("");
+            setShippingAddress("");
+            setPaymentMethod("");
             return response.data;
         } catch (error) {
             console.error("Failed to place order:", error);
