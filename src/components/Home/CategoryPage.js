@@ -7,6 +7,7 @@ import Header from "./Header";
 import Sidebar from "./Sidebar";
 import Footer from "../Footer/Footer";
 import HeaderWithSidebar from "./HeaderWithSidebar";
+import {addToWishlist} from "../addToWishlist";
 
 export default function CategoryPage() {
     const { categoryId } = useParams(); // Get category ID from URL
@@ -14,6 +15,7 @@ export default function CategoryPage() {
     const [products, setProducts] = useState([]);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
+    const userId = localStorage.getItem("userId");
 
     useEffect(() => {
         // Fetch subcategories
@@ -83,6 +85,7 @@ export default function CategoryPage() {
                                     price={product.price}
                                     discountedPrice={product.discountedPrice}
                                     onClick={() => handleProductClick(product)}
+                                    onWishlistClick={() => addToWishlist(userId, product.id)}
                                 />
                             ))}
                         </div>

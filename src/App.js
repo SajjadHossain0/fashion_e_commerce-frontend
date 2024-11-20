@@ -11,6 +11,8 @@ import CategoryPage from "./components/Home/CategoryPage";
 import SubcategoryPage from "./components/Home/SubcategoryPage";
 import CartPage from "./components/Home/CartPage";
 import SearchResults from "./components/Home/SearchResults";
+import MyWishlist from "./components/Home/MyWishlist";
+import CheckoutPage from "./components/Home/CheckoutPage";
 
 function App() {
 
@@ -26,27 +28,39 @@ function App() {
         return role === "ROLE_ADMIN";
     };
 
+    const isUser = () => {
+        const role = localStorage.getItem("role");
+        console.log("Checking user role. Role:", role);
+        return role === "ROLE_USER";
+    };
+
 
     return (
         <div className="App">
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/search" element={<SearchResults />} />
+                    <Route path="/" element={<HomePage/>}/>
+                    <Route path="/search" element={<SearchResults/>}/>
 
                     <Route path="/admin-dashboard"
-                           element={isAdmin() ? <AdminPage/> : <Navigate to="/auth" />} />
+                           element={isAdmin() ? <AdminPage/> : <Navigate to="/auth"/>}/>
+                    <Route path="/admin-dashboard"
+                           element={isUser() ? <HomePage/> : <Navigate to="/auth"/>}/>
 
                     <Route path="/profile"
-                           element={isAuthenticated() ? <Profile/> : <Navigate to="/auth" />} />
+                           element={isAuthenticated() ? <Profile/> : <Navigate to="/auth"/>}/>
 
                     <Route path="/cart"
                            element={isAuthenticated() ? <CartPage/> : <Navigate to="/auth"/>}/>
+                    <Route path="/my-wishlist"
+                           element={isAuthenticated() ? <MyWishlist/> : <Navigate to="/auth"/>}/>
+                    <Route path="/checkout"
+                           element={isAuthenticated() ? <CheckoutPage/> : <Navigate to="/auth"/>}/>
 
-                    <Route path="/auth" element={<AuthPage />} />
-                    <Route path="/category/:categoryId" element={<CategoryPage />} />
-                    <Route path="/subcategory/:subcategoryId" element={<SubcategoryPage />} />
-                    <Route path="/product-details" element={<ProductDetails />} />
+                    <Route path="/auth" element={<AuthPage/>}/>
+                    <Route path="/category/:categoryId" element={<CategoryPage/>}/>
+                    <Route path="/subcategory/:subcategoryId" element={<SubcategoryPage/>}/>
+                    <Route path="/product-details" element={<ProductDetails/>}/>
 
                     {/*<Route path="/product/:id" element={<ProductDetails/>} /> /!* Product details route *!/*/}
                 </Routes>

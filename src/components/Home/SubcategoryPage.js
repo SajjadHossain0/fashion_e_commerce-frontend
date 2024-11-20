@@ -9,10 +9,12 @@ import Sidebar from "./Sidebar";
 import ImageCard from "../ImageCard";
 import CircularLoading from "../CircularLoading";
 import HeaderWithSidebar from "./HeaderWithSidebar";
+import {addToWishlist} from "../addToWishlist";
 
 export default function SubcategoryPage() {
     const {subcategoryId} = useParams(); // Get subcategory ID from the URL
     const [subcategoryProducts, setSubcategoryProducts] = useState([]);
+    const userId = localStorage.getItem("userId");
 
     // for header and sidebar===============
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -72,6 +74,7 @@ export default function SubcategoryPage() {
                                     price={product.price}
                                     discountedPrice={product.discountedPrice}
                                     onClick={() => handleProductClick(product)}
+                                    onWishlistClick={() => addToWishlist(userId, product.id)}
                                 />
                             ))
                         ) : (

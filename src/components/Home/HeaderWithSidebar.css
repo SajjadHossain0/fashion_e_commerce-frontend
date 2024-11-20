@@ -24,7 +24,7 @@
 }
 .search-icon{
     color: white;
-    font-size: 30px;
+    font-size: 25px;
     display: none;
 }
 .search-bar input {
@@ -43,7 +43,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-size: 30px;
+    font-size: 25px;
     color: white;
 }
 .profile-dropdown {

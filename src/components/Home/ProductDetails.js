@@ -6,6 +6,9 @@ import Footer from "../Footer/Footer";
 import './ProductDetails.css';
 import apiClient from "../API/apiClient";
 import HeaderWithSidebar from "./HeaderWithSidebar";
+import errorNotify from "../errorNotify";
+import {addToCart} from "../addToCart";
+import {ToastContainer} from "react-toastify";
 
 export default function ProductDetails() {
     const { state } = useLocation(); // Access state passed via navigate
@@ -18,13 +21,18 @@ export default function ProductDetails() {
 
     const [quantity, setQuantity] = useState(1);
     const [selectedSize, setSelectedSize] = useState(null);
+    const userId = localStorage.getItem("userId");
 
-    const handleAddToCart = () => {
+    const handleAddToCart = async () => {
         if (!selectedSize) {
-            alert("Please select a size!");
+            errorNotify("Please select a size!");
             return;
         }
-        console.log(`Added ${quantity} of ${product?.title} (Size: ${selectedSize}) to the cart`);
+        try {
+            await addToCart(userId, product.id, quantity, selectedSize);
+        } catch (err) {
+            console.error("Error adding product to cart:", err);
+        }
     };
 
     const handleQuantityChange = (e) => {
@@ -130,6 +138,7 @@ export default function ProductDetails() {
 
                     </div>
                 </div>
+                <ToastContainer/>
             </main>
             <Footer />
         </div>

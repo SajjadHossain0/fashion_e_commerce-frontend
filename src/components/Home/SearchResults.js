@@ -4,12 +4,15 @@ import apiClient from "../API/apiClient";
 import ProductCard from "../ProductCard";
 import Footer from "../Footer/Footer";
 import HeaderWithSidebar from "./HeaderWithSidebar";
+import {addToWishlist} from "../addToWishlist";
 
 const SearchResults = () => {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const keyword = queryParams.get("keyword");
+    const userId = localStorage.getItem("userId");
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -51,9 +54,9 @@ const SearchResults = () => {
                     <HeaderWithSidebar/>
                 </>
 
-                <main>
+                <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
                     <div className="search-results">
-                        <h2>Search results for "{keyword}"</h2>
+                        <div align="left"><h5>Search results for "{keyword}"</h5></div>
                         {products.length > 0 ? (
                             <div className="product-grid">
                                 {products.map((product) => (
@@ -65,6 +68,7 @@ const SearchResults = () => {
                                         price={product.price}
                                         discountedPrice={product.discountedPrice}
                                         onClick={() => handleProductClick(product)}
+                                        onWishlistClick={() => addToWishlist(userId, product.id)}
                                     />
                                 ))}
                             </div>

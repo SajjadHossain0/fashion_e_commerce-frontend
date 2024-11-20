@@ -1,14 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Login from "./Login";
 import Register from "./Register";
-import "./AuthPage.css";
-import Header from "../Home/Header";
-import Sidebar from "../Home/Sidebar";
-import ProductCard from "../ProductCard";
+import "./AuthPage.css"
 import Footer from "../Footer/Footer";
-import ImageCard from "../ImageCard";
-import apiClient from "../API/apiClient";
-import {useNavigate} from "react-router-dom";
 import HeaderWithSidebar from "../Home/HeaderWithSidebar";
 
 const AuthPage = () => {

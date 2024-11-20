@@ -7,11 +7,14 @@ import Advertisement from "./Advertisement";
 import ImageCard from "../ImageCard";
 import {useNavigate} from "react-router-dom";
 import HeaderWithSidebar from "./HeaderWithSidebar";
+import {addToWishlist} from "../addToWishlist";
 
 export default function HomePage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
+    const navigate = useNavigate();
+    const userId = localStorage.getItem("userId");
 
     const fetchProducts = async () => {
         try {
@@ -21,7 +24,6 @@ export default function HomePage() {
             console.error("Error fetching products:", error);
         }
     };
-
     const fetchCategories = async () => {
         try {
             const response = await apiClient.get("/categories");
@@ -30,8 +32,6 @@ export default function HomePage() {
             console.error("Error fetching categories:", error);
         }
     };
-
-    const navigate = useNavigate();
 
     const handleCategoryClick = (category) => {
         navigate(`/category/${category.id}`); // Redirect to category-specific page
@@ -80,6 +80,7 @@ export default function HomePage() {
                             price={product.price}
                             discountedPrice={product.discountedPrice}
                             onClick={() => handleProductClick(product)}
+                            onWishlistClick={() => addToWishlist(userId, product.id)}
                         />
                         ))}
                     </div>

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {CgProfile} from "react-icons/cg";
-import {FaCartPlus, FaSearch} from "react-icons/fa";
+import {FaCartPlus, FaHeart, FaSearch} from "react-icons/fa";
 import {TiThMenu} from "react-icons/ti";
 import apiClient from "../API/apiClient";
 import './HeaderWithSidebar.css'
@@ -132,6 +132,10 @@ const HeaderWithSidebar = (args) => {
                         </Modal>
                     </>
 
+                    {/*wishlist icon*/}
+                    <a href="/my-wishlist" style={{textDecoration: "none", color: "white"}} className="icon">
+                        <FaHeart/>
+                    </a>
 
                     {/*profile icon*/}
                     <div className="profile-dropdown">

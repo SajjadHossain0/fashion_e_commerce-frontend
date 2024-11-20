@@ -12,14 +12,15 @@ const Login = ({ toggleForm }) => {
     const handleLogin = async () => {
         try {
             const response = await apiClient.post("/auth/login", { email, password });
-            const { token, role } = response.data;
+            const { token, role, userId } = response.data;
 
             // Debug: Log the received role
             console.log("User role received from backend:", role);
 
-            // Save token and role to localStorage
+            // Save token, role and userId to localStorage
             localStorage.setItem("token", token);
             localStorage.setItem("role", role);
+            localStorage.setItem("userId", userId);
 
             successNotify("Login successful!");
 
@@ -28,8 +29,8 @@ const Login = ({ toggleForm }) => {
                 console.log("Redirecting to /admin-dashboard");
                 window.location.href = "/admin-dashboard"; // Admin dashboard
             } else if (role === "ROLE_USER") {
-                console.log("Redirecting to /profile");
-                window.location.href = "/profile"; // User profile
+                console.log("Redirecting to /");
+                window.location.href = "/"; // User profile
             } else {
                 console.log("Unexpected role, redirecting to default /");
                 window.location.href = "/";
