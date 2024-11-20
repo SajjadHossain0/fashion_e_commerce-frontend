@@ -3,8 +3,10 @@ import apiClient from "../API/apiClient";
 import HeaderWithSidebar from "./HeaderWithSidebar";
 import Footer from "../Footer/Footer";
 import "./CheckoutPage.css";
+import {useNavigate} from "react-router-dom";
 
 export default function CheckoutPage() {
+    const navigate = useNavigate();
     const [contactInfo, setContactInfo] = useState("");
     const [shippingAddress, setShippingAddress] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("");
@@ -34,11 +36,12 @@ export default function CheckoutPage() {
             );
 
             alert("Order placed successfully!");
-            deleteCartItem();
+            //deleteCartItem();
+            navigate("/")
             setContactInfo("");
             setShippingAddress("");
             setPaymentMethod("");
-            return response.data;
+            //return response.data;
         } catch (error) {
             console.error("Failed to place order:", error);
             alert("Failed to place order. Please try again.");
