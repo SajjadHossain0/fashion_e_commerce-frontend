@@ -87,9 +87,16 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Responsive Table Wrapper */
+.order-history-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
 .order-history-table {
     width: 100%;
     border-collapse: collapse;
+    min-width: 600px; /* Minimum table width to prevent column overlap */
 }
 
 .order-history-table th,
@@ -114,7 +121,7 @@
 }
 
 .action-buttons {
-    display: flex;
+    align-items: center;
     gap: 10px;
 }
 
@@ -124,6 +131,7 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    margin: 10px;
 }
 
 .btn-update-profile {
@@ -143,4 +151,21 @@
 
 .action-buttons button:hover {
     opacity: 0.9;
+}
+
+/* Media Query for Smaller Screens */
+@media (max-width: 768px) {
+    .profile-details {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .order-history {
+        padding: 15px;
+    }
+
+    .order-history-table-wrapper {
+        padding: 5px;
+    }
 }

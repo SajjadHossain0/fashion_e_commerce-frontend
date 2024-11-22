@@ -158,7 +158,6 @@ const HeaderWithSidebar = (args) => {
                                     <a href="/profile" style={{textDecoration: "none", color: "black"}}>
                                         <li>Profile</li>
                                     </a>
-                                    <li>Order</li>
                                 </ul>
                             </div>
                         )}

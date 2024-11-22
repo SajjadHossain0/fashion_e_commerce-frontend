@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {BrowserRouter, useNavigate} from 'react-router-dom';
 import apiClient from "../API/apiClient";
 import './CartPage.css';
 import HeaderWithSidebar from "./HeaderWithSidebar";
 import {FaHeart, FaTrashAlt} from "react-icons/fa";
 import {ToastContainer} from "react-toastify";
 import Footer from "../Footer/Footer";
+import {Button} from "reactstrap";
 
 export default function CartPage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -78,12 +79,12 @@ export default function CartPage() {
     };
 
     const handleCheckout = () => {
-        navigate('/checkout'); // Redirect to checkout page
+        navigate('/checkout');
+    };
+    const continueShopping = () => {
+        navigate('/');
     };
 
-    /*if (cartItems.length === 0) {
-        return <p>Your cart is empty. Add some products!</p>;
-    }*/
 
     return (
         <div className="homepage">
@@ -94,6 +95,11 @@ export default function CartPage() {
                     <div className="cart-page">
                         <h2>Your Shopping Cart</h2>
                         <p>Your cart is empty. Add some products!</p>
+                        <div align="center">
+                            <Button onClick={continueShopping}>
+                                    Continue Shopping
+                            </Button>
+                        </div>
                     </div>
                 ) : (
                     <div className="cart-page">

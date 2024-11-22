@@ -11,6 +11,7 @@ import AddCategories from "./AddCategories";
 import AddAdvertisement from "./AddAdvertisement";
 import ShippingCharge from "./ShippingCharge";
 import {useNavigate} from "react-router-dom";
+import OrderHistory from "./OrderHistory";
 
 export default function AdminPage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
@@ -51,6 +52,8 @@ export default function AdminPage() {
                 return <AddAdvertisement/>
             case "set-shipping-charge":
                 return <ShippingCharge/>
+            case "order-history":
+                return <OrderHistory/>
 
             default:
                 return <Dashboard/>;
@@ -106,6 +109,10 @@ export default function AdminPage() {
                     <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
                         onClick={() => setCurrentComponent("set-shipping-charge")}>
                         <FaProductHunt/> Set Shipping Charge
+                    </li>
+                    <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
+                        onClick={() => setCurrentComponent("order-history")}>
+                        <FaProductHunt/> Order History
                     </li>
 
                     <li><FaUsers/> Manage Users</li>

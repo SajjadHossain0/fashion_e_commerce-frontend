@@ -58,6 +58,11 @@ export default function Profile() {
     if (!user) {
         return <div>Loading...</div>;
     }
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/auth");
+    };
+
 
 
     return (
@@ -101,42 +106,48 @@ export default function Profile() {
                                 {/* Order History Section */}
                                 <div className="order-history">
                                     <h3 className="section-title">Order History</h3>
-                                    <table className="order-history-table">
-                                        <thead>
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Date</th>
-                                            <th>Status</th>
-                                            <th>Total</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {/*{orders.map((order) => {
-
-                                        })}*/}
-                                        <tr>
-                                            <td>#1001</td>
-                                            <td>20-Nov-2024</td>
-                                            <td>Delivered</td>
-                                            <td>$150.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>#1002</td>
-                                            <td>18-Nov-2024</td>
-                                            <td>Processing</td>
-                                            <td>$89.99</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+                                    <div className="order-history-table-wrapper">
+                                        <table className="order-history-table">
+                                            <thead>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Shipping Address</th>
+                                                <th>Payment</th>
+                                                <th>Status</th>
+                                                <th>Order Date</th>
+                                                <th>Total</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {orders.length > 0 ? (
+                                                orders.map((order) => (
+                                                    <tr key={order.id}>
+                                                        <td>#{order.id}</td>
+                                                        <td>{order.shippingAddress}</td>
+                                                        <td>{order.paymentMethod}</td>
+                                                        <td>{order.status}</td>
+                                                        <td>{new Date(order.orderDate).toLocaleDateString()}</td>
+                                                        <td>${order.totalPrice.toFixed(2)}</td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="6" style={{ textAlign: "center" }}>
+                                                        No orders found.
+                                                    </td>
+                                                </tr>
+                                            )}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
 
                                 {/* Account Actions Section */}
                                 <div className="account-actions">
                                     <h3 className="section-title">Manage Account</h3>
                                     <div className="action-buttons">
-                                        <button className="btn-update-profile">Update Profile</button>
                                         <button className="btn-change-password">Change Password</button>
-                                        <button className="btn-logout">Logout</button>
+                                        <button className="btn-logout" onClick={handleLogout}>Logout</button>
                                     </div>
                                 </div>
                             </div>
