@@ -26,14 +26,14 @@ export default function ProductCard(props) {
                         <p>{truncateText(props.description, 30)}</p>
                         <div className="original-price">৳{props.price}</div>
                         <div className="discount-price">৳{props.discountedPrice}</div>
-                    </div>
-                    <div className="product-action-btn">
-                        <button className="add-to-cart-btn">
-                            <a href="/cart">Add to Cart</a>
-                        </button>
-                        <a href="/my-wishlist" onClick={props.onWishlistClick} className="wishlist-btn">
-                            <FaRegHeart/>
-                        </a>
+                        <div className="product-action-btn">
+                            <button className="add-to-cart-btn">
+                                <a>Add to Cart</a>
+                            </button>
+                            <a href="/my-wishlist" onClick={props.onWishlistClick} className="wishlist-btn">
+                                <FaRegHeart/>
+                            </a>
+                        </div>
                     </div>
 
 

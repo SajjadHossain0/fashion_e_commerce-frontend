@@ -7,11 +7,19 @@ import apiClient from "../API/apiClient";
 import {ToastContainer} from "react-toastify";
 import successNotify from "../successNotify";
 import errorNotify from "../errorNotify";
+import {addToCart} from "../addToCart";
+import {useNavigate} from "react-router-dom";
 
 export default function MyWishlist() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [wishlist, setWishlist] = useState([]);
     const userId = localStorage.getItem("userId");
+    const navigate = useNavigate();
+
+    const handleProductClick = (product) => {
+        navigate(`/product-details`, { state: { product } }); // Navigate to product details with data
+    };
+
 
     const fetchWishList = async () => {
         try{
@@ -71,7 +79,7 @@ export default function MyWishlist() {
                                 <td>
                                     {/*<span>{item.addedAt}</span>*/}
                                     <button className="add-to-cart-btn">
-                                        <a href="/cart">Add to Cart</a>
+                                        <a onClick={() => handleProductClick(item.product)}>Add to Cart</a>
                                     </button>
                                     <a
                                         style={{color: "#ff6f61", fontSize: 25, marginLeft: 10, cursor: "pointer"}}
