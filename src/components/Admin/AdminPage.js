@@ -1,8 +1,17 @@
 import React, {useEffect, useState} from "react";
 import './AdminPage.css';
 import {CgProfile} from "react-icons/cg";
-import {FaCog, FaUsers, FaProductHunt, FaShoppingCart} from "react-icons/fa";
-import {MdDashboard} from "react-icons/md";
+import {
+    FaCog,
+    FaUsers,
+    FaProductHunt,
+    FaShoppingCart,
+    FaEye,
+    FaBuysellads,
+    FaShippingFast,
+    FaHistory
+} from "react-icons/fa";
+import {MdDashboard, MdManageHistory} from "react-icons/md";
 import Dashboard from "./Dashboard";
 import ManageProduct from "./ManageProduct";
 import AddProduct from "./AddProduct";
@@ -12,6 +21,7 @@ import AddAdvertisement from "./AddAdvertisement";
 import ShippingCharge from "./ShippingCharge";
 import {useNavigate} from "react-router-dom";
 import OrderHistory from "./OrderHistory";
+import {IoMdAddCircle} from "react-icons/io";
 
 export default function AdminPage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
@@ -92,27 +102,27 @@ export default function AdminPage() {
                     </li>*/}
                     <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
                         onClick={() => setCurrentComponent("add-product")}>
-                        <FaProductHunt/> Add Product
+                        <IoMdAddCircle />Add Product
                     </li>
                     <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
                         onClick={() => setCurrentComponent("view-product")}>
-                        <FaProductHunt/> View Products
+                        <FaEye />View Products
                     </li>
                     <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
                         onClick={() => setCurrentComponent("add-categories")}>
-                        <FaProductHunt/> Manage Categories
+                        <MdManageHistory />Manage Categories
                     </li>
                     <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
                         onClick={() => setCurrentComponent("add-advertisement")}>
-                        <FaProductHunt/> Manage Ads
+                        <FaBuysellads />Manage Ads
                     </li>
                     <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
                         onClick={() => setCurrentComponent("set-shipping-charge")}>
-                        <FaProductHunt/> Set Shipping Charge
+                        <FaShippingFast />Set Shipping Charge
                     </li>
                     <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
                         onClick={() => setCurrentComponent("order-history")}>
-                        <FaProductHunt/> Order History
+                        <FaHistory />Order History
                     </li>
 
                     <li><FaUsers/> Manage Users</li>
