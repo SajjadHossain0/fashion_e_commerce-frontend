@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import apiClient from "../API/apiClient";
+import apiClient from "../../API/apiClient";
 
 const OrderSummary = () => {
     const { orderId } = useParams();

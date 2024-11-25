@@ -1,0 +1,117 @@
+/* OrderHistory.css */
+
+.admin-order-history {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.admin-order-history h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.admin-order-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.admin-order-history table th,
+.admin-order-history table td {
+    text-align: left;
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-order-history table th {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.admin-order-history table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.admin-order-history table td button,
+.admin-order-history table td select {
+    margin-right: 5px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.admin-order-history table td button {
+    background-color: #28a745;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.admin-order-history table td button:hover {
+    background-color: #218838;
+}
+
+.admin-order-history table td select {
+    background-color: #e9ecef;
+    font-size: 14px;
+}
+
+.admin-order-history table td button:last-of-type {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.admin-order-history table td button:last-of-type:hover {
+    background-color: #c82333;
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.modal-body p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.modal-body ul {
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+.modal-body ul li {
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.modal-body ul li img {
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+button.close {
+    font-size: 20px;
+    color: #fff;
+}
+
+button.close:hover {
+    color: #ccc;
+}

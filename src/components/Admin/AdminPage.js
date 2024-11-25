@@ -22,6 +22,7 @@ import ShippingCharge from "./ShippingCharge";
 import {useNavigate} from "react-router-dom";
 import OrderHistory from "./OrderHistory";
 import {IoMdAddCircle} from "react-icons/io";
+import ManageOrder from "./ManageOrder/ManageOrder";
 
 export default function AdminPage() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth > 768);
@@ -64,6 +65,8 @@ export default function AdminPage() {
                 return <ShippingCharge/>
             case "order-history":
                 return <OrderHistory/>
+            case "manage-order":
+                return <ManageOrder/>
 
             default:
                 return <Dashboard/>;
@@ -124,9 +127,12 @@ export default function AdminPage() {
                         onClick={() => setCurrentComponent("order-history")}>
                         <FaHistory />Order History
                     </li>
+                    <li className="admin-sidebar-link" style={{textDecoration: "none", color: "black"}}
+                        onClick={() => setCurrentComponent("manage-order")}>
+                        <FaShoppingCart/> Manage Orders
+                    </li>
 
                     <li><FaUsers/> Manage Users</li>
-                    <li><FaShoppingCart/> Manage Orders</li>
                     <li><FaCog/> Settings</li>
                 </ul>
             </div>
