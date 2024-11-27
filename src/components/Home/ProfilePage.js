@@ -63,6 +63,14 @@ export default function Profile() {
         navigate("/auth");
     };
 
+    const isAdmin = () => {
+        const role = localStorage.getItem("role");
+        console.log("Checking admin role. Role:", role);
+        return role === "ROLE_ADMIN";
+    };
+    const handleAdminBtn = () => {
+        navigate("/admin-dashboard");
+    }
 
 
     return (
@@ -146,6 +154,12 @@ export default function Profile() {
                                 <div className="account-actions">
                                     <h3 className="section-title">Manage Account</h3>
                                     <div className="action-buttons">
+                                        {isAdmin() && (
+                                            <button className="btn-change-password"
+                                            onClick={handleAdminBtn}>
+                                                Go to Admin Panel
+                                            </button>
+                                        )}
                                         <button className="btn-change-password">Change Password</button>
                                         <button className="btn-logout" onClick={handleLogout}>Logout</button>
                                     </div>
