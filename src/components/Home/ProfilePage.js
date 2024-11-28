@@ -155,7 +155,7 @@ export default function Profile() {
                                     <h3 className="section-title">Manage Account</h3>
                                     <div className="action-buttons">
                                         {isAdmin() && (
-                                            <button className="btn-change-password"
+                                            <button className="btn-change-admin"
                                             onClick={handleAdminBtn}>
                                                 Go to Admin Panel
                                             </button>
