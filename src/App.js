@@ -13,6 +13,7 @@ import CartPage from "./components/Home/CartPage";
 import SearchResults from "./components/Home/SearchResults";
 import MyWishlist from "./components/Home/MyWishlist";
 import CheckoutPage from "./components/Home/CheckoutPage";
+import PaymentStatusPage from "./components/Home/PaymentStatusPage";
 
 function App() {
 
@@ -56,6 +57,7 @@ function App() {
                            element={isAuthenticated() ? <MyWishlist/> : <Navigate to="/auth"/>}/>
                     <Route path="/checkout"
                            element={isAuthenticated() ? <CheckoutPage/> : <Navigate to="/auth"/>}/>
+                    <Route path="/payment-status" element={isAuthenticated() ? <PaymentStatusPage/> : <Navigate to="/auth"/>} />
 
                     <Route path="/auth" element={<AuthPage/>}/>
                     <Route path="/category/:categoryId" element={<CategoryPage/>}/>

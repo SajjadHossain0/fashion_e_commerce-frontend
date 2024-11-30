@@ -24,6 +24,7 @@ export default function CheckoutPage() {
         }
     }
 
+/*
     const handlePlaceOrder = async () => {
         setLoading(true);
         try {
@@ -47,6 +48,53 @@ export default function CheckoutPage() {
             alert("Failed to place order. Please try again.");
         } finally {
             setLoading(false);
+        }
+    };
+*/
+
+    const handlePlaceOrder = async () => {
+        setLoading(true);
+        try {
+            const response = await apiClient.post(
+                `/orders/place?userId=${userId}&contactInfo=${encodeURIComponent(
+                    contactInfo
+                )}&shippingAddress=${encodeURIComponent(
+                    shippingAddress
+                )}&paymentMethod=${paymentMethod}&isDhaka=${isDhaka}`
+            );
+
+            const orderId = response.data.id; // Assuming the API returns the order ID
+            if (paymentMethod === "COD") {
+                alert("Order placed successfully with Cash on Delivery!");
+                navigate("/");
+            } else {
+                // Initiate payment for online methods (Card, Bkash)
+                await initiatePayment(orderId);
+            }
+        } catch (error) {
+            console.error("Failed to place order:", error);
+            alert("Failed to place order. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    const initiatePayment = async (orderId) => {
+        try {
+            const paymentResponse = await apiClient.post(
+                `/payment/initiate?orderId=${orderId}`
+            );
+
+            const gatewayUrl = paymentResponse.data.GatewayPageURL; // SSLCommerz redirect URL
+            if (gatewayUrl) {
+                window.location.href = gatewayUrl; // Redirect to the payment gateway
+            } else {
+                alert("Failed to initiate payment. Please try again.");
+            }
+        } catch (error) {
+            console.error("Payment initiation failed:", error);
+            alert("Payment initiation failed. Please try again.");
         }
     };
 
