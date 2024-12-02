@@ -171,13 +171,6 @@ export default function CheckoutPage() {
                         </div>
                     </div>
 
-                    {/*<button
-                        className="place-order-button"
-                        onClick={handlePlaceOrder}
-                        disabled={loading}
-                    >
-                        {loading ? "Placing Order..." : "Place Order"}
-                    </button>*/}
                     <button
                         className={`place-order-button ${
                             paymentMethod === "COD" ? "cod" : paymentMethod ? "pay-now" : ""
