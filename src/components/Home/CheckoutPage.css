@@ -88,3 +88,27 @@
     height: 50px;
     margin-bottom: 10px;
 }
+.place-order-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.place-order-button:disabled {
+    background-color: #ccc; /* Gray for disabled state */
+    color: #666;
+    cursor: not-allowed;
+}
+
+.place-order-button.cod {
+    background-color: #28a745; /* Green for COD (Place Order) */
+    color: white;
+}
+
+.place-order-button.pay-now {
+    background-color: #007bff; /* Blue for Pay Now */
+    color: white;
+}

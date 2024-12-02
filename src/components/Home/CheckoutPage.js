@@ -171,16 +171,39 @@ export default function CheckoutPage() {
                         </div>
                     </div>
 
-                    <button
+                    {/*<button
                         className="place-order-button"
                         onClick={handlePlaceOrder}
                         disabled={loading}
                     >
                         {loading ? "Placing Order..." : "Place Order"}
+                    </button>*/}
+                    <button
+                        className={`place-order-button ${
+                            paymentMethod === "COD" ? "cod" : paymentMethod ? "pay-now" : ""
+                        }`}
+                        onClick={
+                            paymentMethod === "COD"
+                                ? handlePlaceOrder
+                                : paymentMethod
+                                    ? initiatePayment
+                                    : null
+                        }
+                        disabled={!paymentMethod || loading}
+                    >
+                        {loading
+                            ? "Processing..."
+                            : paymentMethod === "COD"
+                                ? "Place Order"
+                                : paymentMethod
+                                    ? "Pay Now"
+                                    : "Select Payment Method"}
                     </button>
+
+
                 </div>
             </main>
-            <Footer />
+            <Footer/>
         </div>
     );
 }
