@@ -11,7 +11,7 @@ import nagad from "../images/nagad.png"
 import errorNotify from "../errorNotify";
 
 export default function CheckoutPage() {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isSidebarOpen] = useState(false);
     const navigate = useNavigate();
     const userId = localStorage.getItem("userId");
     const [contactInfo, setContactInfo] = useState("");
@@ -50,12 +50,15 @@ export default function CheckoutPage() {
 
     const initiatePayment = async (orderId) => {
         try {
-            const paymentResponse = await apiClient.post(
-                `/payment/initiate?orderId=${orderId}`
-            );
-            const gatewayUrl = paymentResponse.data.GatewayPageURL;
+            if (!orderId) {
+                throw new Error("Invalid Order ID");
+            }
+
+            const response = await apiClient.post(`/payment/initiate?orderId=${encodeURIComponent(orderId)}`);
+            const gatewayUrl = response.data.GatewayPageURL;
+
             if (gatewayUrl) {
-                window.location.href = gatewayUrl;
+                window.location.href = gatewayUrl; // Redirect to the payment gateway
             } else {
                 alert("Failed to initiate payment. Please try again.");
             }
