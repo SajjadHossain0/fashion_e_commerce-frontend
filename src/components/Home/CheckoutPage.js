@@ -3,7 +3,11 @@ import apiClient from "../API/apiClient";
 import HeaderWithSidebar from "./HeaderWithSidebar";
 import Footer from "../Footer/Footer";
 import "./CheckoutPage.css";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import bkash from "../images/bkash.png"
+import cod from "../images/cod.png"
+import card from "../images/card.png"
+import nagad from "../images/nagad.png"
 
 export default function CheckoutPage() {
     const navigate = useNavigate();
@@ -14,43 +18,6 @@ export default function CheckoutPage() {
     const [loading, setLoading] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const userId = localStorage.getItem("userId");
-
-    const deleteCartItem = async () => {
-        try{
-            const response = await apiClient.delete(`/cart/clear/${userId}`);
-            console.log(response);
-        }catch(err){
-            console.log(err);
-        }
-    }
-
-/*
-    const handlePlaceOrder = async () => {
-        setLoading(true);
-        try {
-            const response = await apiClient.post(
-                `/orders/place?userId=${userId}&contactInfo=${encodeURIComponent(
-                    contactInfo
-                )}&shippingAddress=${encodeURIComponent(
-                    shippingAddress
-                )}&paymentMethod=${paymentMethod}&isDhaka=${isDhaka}`
-            );
-
-            alert("Order placed successfully!");
-            //deleteCartItem();
-            navigate("/")
-            setContactInfo("");
-            setShippingAddress("");
-            setPaymentMethod("");
-            //return response.data;
-        } catch (error) {
-            console.error("Failed to place order:", error);
-            alert("Failed to place order. Please try again.");
-        } finally {
-            setLoading(false);
-        }
-    };
-*/
 
     const handlePlaceOrder = async () => {
         setLoading(true);
@@ -68,7 +35,6 @@ export default function CheckoutPage() {
                 alert("Order placed successfully with Cash on Delivery!");
                 navigate("/");
             } else {
-                // Initiate payment for online methods (Card, Bkash)
                 await initiatePayment(orderId);
             }
         } catch (error) {
@@ -79,16 +45,14 @@ export default function CheckoutPage() {
         }
     };
 
-
     const initiatePayment = async (orderId) => {
         try {
             const paymentResponse = await apiClient.post(
                 `/payment/initiate?orderId=${orderId}`
             );
-
-            const gatewayUrl = paymentResponse.data.GatewayPageURL; // SSLCommerz redirect URL
+            const gatewayUrl = paymentResponse.data.GatewayPageURL;
             if (gatewayUrl) {
-                window.location.href = gatewayUrl; // Redirect to the payment gateway
+                window.location.href = gatewayUrl;
             } else {
                 alert("Failed to initiate payment. Please try again.");
             }
@@ -98,9 +62,21 @@ export default function CheckoutPage() {
         }
     };
 
+    const deliveryLocations = [
+        { id: "dhaka", name: "Dhaka", selected: isDhaka },
+        { id: "outsideDhaka", name: "Outside Dhaka", selected: !isDhaka },
+    ];
+
+    const paymentMethods = [
+        { id: "COD", name: "Cash on Delivery", logo: cod },
+        { id: "bkash", name: "Bkash", logo: bkash },
+        { id: "nagad", name: "Nagad", logo: nagad },
+        { id: "card", name: "Card Payment", logo: card },
+    ];
+
     return (
         <div className="homepage">
-            <HeaderWithSidebar/>
+            <HeaderWithSidebar />
             <main className={`main-content ${isSidebarOpen ? "" : "full-width"}`}>
                 <h1>Checkout</h1>
                 <div className="checkout-form">
@@ -123,59 +99,48 @@ export default function CheckoutPage() {
                             required
                         />
                     </div>
-                    <div className="form-group">
-                        <label>Payment Method</label>
-                        <div className="payment-methods">
-                            <label>
-                                <input
-                                    type="radio"
-                                    value="COD"
-                                    checked={paymentMethod === "COD"}
-                                    onChange={() => setPaymentMethod("COD")}
-                                />
-                                Cash on Delivery (COD)
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    value="card"
-                                    checked={paymentMethod === "card"}
-                                    onChange={() => setPaymentMethod("card")}
-                                />
-                                Credit/Debit Card
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    value="bkash"
-                                    checked={paymentMethod === "bkash"}
-                                    onChange={() => setPaymentMethod("bkash")}
-                                />
-                                Bkash
-                            </label>
-                        </div>
-                    </div>
+
+                    {/* Delivery Location Cards */}
                     <div className="form-group">
                         <label>Delivery Location</label>
-                        <div className="location-options">
-                            <label>
-                                <input
-                                    type="radio"
-                                    checked={isDhaka}
-                                    onChange={() => setIsDhaka(true)}
-                                />
-                                Dhaka
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    checked={!isDhaka}
-                                    onChange={() => setIsDhaka(false)}
-                                />
-                                Outside Dhaka
-                            </label>
+                        <div className="card-container">
+                            {deliveryLocations.map((location) => (
+                                <div
+                                    key={location.id}
+                                    className={`card ${
+                                        location.selected ? "selected" : ""
+                                    }`}
+                                    onClick={() => setIsDhaka(location.id === "dhaka")}
+                                >
+                                    <h3>{location.name}</h3>
+                                </div>
+                            ))}
                         </div>
                     </div>
+
+                    {/* Payment Method Cards */}
+                    <div className="form-group">
+                        <label>Payment Method</label>
+                        <div className="card-container">
+                            {paymentMethods.map((method) => (
+                                <div
+                                    key={method.id}
+                                    className={`card ${
+                                        paymentMethod === method.id ? "selected" : ""
+                                    }`}
+                                    onClick={() => setPaymentMethod(method.id)}
+                                >
+                                    <img
+                                        src={method.logo}
+                                        alt={method.name}
+                                        className="card-logo"
+                                    />
+                                    <p>{method.name}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
                     <button
                         className="place-order-button"
                         onClick={handlePlaceOrder}
@@ -185,7 +150,7 @@ export default function CheckoutPage() {
                     </button>
                 </div>
             </main>
-            <Footer/>
+            <Footer />
         </div>
     );
 }

@@ -80,6 +80,7 @@ export default function AllOrders(args) {
                             <th>User</th>
                             <th>Total Price</th>
                             <th>Status</th>
+                            <th>Payment Method</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -90,6 +91,7 @@ export default function AllOrders(args) {
                                 <td>{order.user.fullname}</td>
                                 <td>৳{order.totalPrice.toFixed(2)}</td>
                                 <td>{order.status}</td>
+                                <td>{order.payment_method}</td>
                                 <td>
                                     <button onClick={() => handleViewSummary(order.id)}>
                                         View Summary
