@@ -54,6 +54,9 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+.card-container h6{
+    color: #0ca10d;
+}
 
 .card {
     display: flex;
@@ -72,12 +75,12 @@
 }
 
 .card.selected {
-    border-color: #007bff;
+    border-color: #ff721a;
     transform: scale(1.05);
 }
 
 .card:hover {
-    border-color: #0056b3;
+    border-color: #ff721a;
 }
 
 .card-logo {

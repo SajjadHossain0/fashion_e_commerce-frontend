@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import apiClient from "../API/apiClient";
 import HeaderWithSidebar from "./HeaderWithSidebar";
 import Footer from "../Footer/Footer";
@@ -8,16 +8,19 @@ import bkash from "../images/bkash.png"
 import cod from "../images/cod.png"
 import card from "../images/card.png"
 import nagad from "../images/nagad.png"
+import errorNotify from "../errorNotify";
 
 export default function CheckoutPage() {
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const navigate = useNavigate();
+    const userId = localStorage.getItem("userId");
     const [contactInfo, setContactInfo] = useState("");
     const [shippingAddress, setShippingAddress] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("");
     const [isDhaka, setIsDhaka] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const userId = localStorage.getItem("userId");
+    const [chargeDhaka, setChargeDhaka] = useState(0);
+    const [chargeOutsideDhaka, setChargeOutsideDhaka] = useState(0);
 
     const handlePlaceOrder = async () => {
         setLoading(true);
@@ -62,9 +65,35 @@ export default function CheckoutPage() {
         }
     };
 
+    useEffect(() => {
+        const fetchShippingCharges = async () => {
+            try {
+                const response = await apiClient.get("/shipping/view");
+                setChargeDhaka(response.data.chargeDhaka);
+                setChargeOutsideDhaka(response.data.chargeOutsideDhaka);
+            } catch (error) {
+                console.error("Error fetching shipping charges:", error);
+                errorNotify("Failed to load shipping charges. Please try again later.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchShippingCharges();
+    }, []);
     const deliveryLocations = [
-        { id: "dhaka", name: "Dhaka", selected: isDhaka },
-        { id: "outsideDhaka", name: "Outside Dhaka", selected: !isDhaka },
+        {
+            id: "dhaka",
+            name: "Dhaka",
+            charge: chargeDhaka,
+            selected: isDhaka
+        },
+        {
+            id: "outsideDhaka",
+            name: "Outside Dhaka",
+            charge: chargeOutsideDhaka,
+            selected: !isDhaka
+        },
     ];
 
     const paymentMethods = [
@@ -113,6 +142,7 @@ export default function CheckoutPage() {
                                     onClick={() => setIsDhaka(location.id === "dhaka")}
                                 >
                                     <h3>{location.name}</h3>
+                                    <h6>{location.charge} BDT</h6>
                                 </div>
                             ))}
                         </div>
