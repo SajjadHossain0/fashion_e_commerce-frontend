@@ -33,7 +33,7 @@ export default function CheckoutPage() {
                 )}&paymentMethod=${paymentMethod}&isDhaka=${isDhaka}`
             );
 
-            const orderId = response.data.id; // Assuming the API returns the order ID
+            const orderId = response.data.id;
             if (paymentMethod === "COD") {
                 alert("Order placed successfully with Cash on Delivery!");
                 navigate("/");
@@ -54,17 +54,20 @@ export default function CheckoutPage() {
                 throw new Error("Invalid Order ID");
             }
 
-            const response = await apiClient.post(`/payment/initiate?orderId=${encodeURIComponent(orderId)}`);
+            console.log("Initiating payment for Order ID:", orderId);
+            const response = await apiClient.post(`/payment/initiate?orderId=${orderId}`);
+            console.log("Payment initiation response:", response.data);
+
             const gatewayUrl = response.data.GatewayPageURL;
 
             if (gatewayUrl) {
                 window.location.href = gatewayUrl; // Redirect to the payment gateway
             } else {
-                alert("Failed to initiate payment. Please try again.");
+                alert("Payment initiation failed. Please try again or contact support.");
             }
         } catch (error) {
-            console.error("Payment initiation failed:", error);
-            alert("Payment initiation failed. Please try again.");
+            console.error("Payment initiation failed:", error.response?.data || error.message);
+            alert("An error occurred while initiating the payment. Please try again later.");
         }
     };
 
@@ -174,7 +177,7 @@ export default function CheckoutPage() {
                         </div>
                     </div>
 
-                    <button
+                    {/*<button
                         className={`place-order-button ${
                             paymentMethod === "COD" ? "cod" : paymentMethod ? "pay-now" : ""
                         }`}
@@ -185,6 +188,21 @@ export default function CheckoutPage() {
                                     ? initiatePayment
                                     : null
                         }
+                        disabled={!paymentMethod || loading}
+                    >
+                        {loading
+                            ? "Processing..."
+                            : paymentMethod === "COD"
+                                ? "Place Order"
+                                : paymentMethod
+                                    ? "Pay Now"
+                                    : "Select Payment Method"}
+                    </button>*/}
+                    <button
+                        className={`place-order-button ${
+                            paymentMethod === "COD" ? "cod" : paymentMethod ? "pay-now" : ""
+                        }`}
+                        onClick={handlePlaceOrder} // Always call handlePlaceOrder
                         disabled={!paymentMethod || loading}
                     >
                         {loading
